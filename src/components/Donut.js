@@ -47,6 +47,7 @@ export class Donut extends React.Component {
 
     const pie = d3.pie()
       .padAngle(0.05)
+      .sort(null) // need this so that it loads in order
       .value((d) => d.value)
     const dataInPieFormat = pie(data)
 
@@ -55,18 +56,29 @@ export class Donut extends React.Component {
       .data(dataInPieFormat)
       .enter()
       .append('path')
-      .attr('d', arc)
       .attr('fill', (d, i) => colors[i])
       .on("mouseover", function (d) {
         d3.select('text').text(`${d.data.name}: ${d.data.value}`)
         d3.select(this).style("cursor", "pointer").style("opacity", "0.5");
-
       })
       .on("mouseout", function (d) {
         d3.select('text').text(``)
         d3.select(this)
           .style("cursor", "none").style("opacity", "1");
       })
+      .transition()
+      .delay(function (d, i) {
+        return i * 250
+      })
+      .duration(500)
+      .attrTween('d', function (d) {
+        const interpolate = d3.interpolate(d.startAngle, d.endAngle);
+        return function (t) {
+          d.endAngle = interpolate(t);
+          return arc(d)
+        }
+      })
+
 
   };
 
@@ -74,7 +86,6 @@ export class Donut extends React.Component {
     return (
       <section className="page-excl-nav">
         <h1 className="graph-title"> DONUT</h1>
-
         <svg />
       </section>
     )
