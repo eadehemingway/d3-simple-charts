@@ -67,18 +67,16 @@ export class Donut extends React.Component {
           .style("cursor", "none").style("opacity", "1");
       })
       .transition()
-      .delay(function (d, i) {
-        return i * 250
-      })
-      .duration(500)
+      .duration(1500)
       .attrTween('d', function (d) {
-        const interpolate = d3.interpolate(d.startAngle, d.endAngle);
+        const interpolateStart = d3.interpolate(0, d.startAngle)
+        const interpolateEnd = d3.interpolate(0, d.endAngle);
         return function (t) {
-          d.endAngle = interpolate(t);
+          d.startAngle = interpolateStart(t)
+          d.endAngle = interpolateEnd(t);
           return arc(d)
         }
       })
-
 
   };
 
