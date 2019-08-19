@@ -21,7 +21,7 @@ export class App extends React.Component {
           <Nav />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/pie" component={ThinDonut} />
+            <Route exact path="/thindonut" component={ThinDonut} />
             <Route exact path="/force" component={Force} />
             <Route exact path="/forcewithlinks" component={ForceWithLinks} />
             <Route exact path="/donut" component={Donut} />
