@@ -5,27 +5,50 @@ export class LineChart extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lineOne: [
-                { rating: 3, date_entered: '2018-02-12' },
-                { rating: 4, date_entered: '2018-02-30' },
-                { rating: 4, date_entered: '2018-03-01' },
-                { rating: 5, date_entered: '2018-03-14' },
-                { rating: 4, date_entered: '2018-03-30' },
-                { rating: 2, date_entered: '2018-04-02' },
-                { rating: 4, date_entered: '2018-04-15' },
-                { rating: 6, date_entered: '2018-04-30' }
+            data: [
+                {
+                    label: "lineOne",
+                    lineData: [
+                        { rating: 3, date_entered: '2018-02-12' },
+                        { rating: 4, date_entered: '2018-02-30' },
+                        { rating: 4, date_entered: '2018-03-01' },
+                        { rating: 5, date_entered: '2018-03-14' },
+                        { rating: 4, date_entered: '2018-03-30' },
+                        { rating: 2, date_entered: '2018-04-02' },
+                        { rating: 4, date_entered: '2018-04-15' },
+                        { rating: 6, date_entered: '2018-04-30' }]
+                },
+                {
+                    label: "lineTwo",
+                    lineData: [
+                        { rating: 7, date_entered: '2018-02-12' },
+                        { rating: 6, date_entered: '2018-02-30' },
+                        { rating: 6, date_entered: '2018-03-01' },
+                        { rating: 5, date_entered: '2018-03-14' },
+                        { rating: 4, date_entered: '2018-03-30' },
+                        { rating: 3, date_entered: '2018-04-02' },
+                        { rating: 2, date_entered: '2018-04-15' },
+                        { rating: 2, date_entered: '2018-04-30' }
+                    ]
+                }
+
             ],
+
             chart_width: 600,
             chart_height: 400
         }
     };
 
     componentDidMount() {
-        const { lineOne, chart_height, chart_width } = this.state
-        const timeParsedData = lineOne.map(d => {
+        const { data, chart_height, chart_width } = this.state
+        const timeParsedData = data.map(d => {
+            const lineData = d.lineData.map(l => ({
+                ...l,
+                date_entered: d3.timeParse("%Y-%m-%d")(l.date_entered)
+            }))
             return {
                 ...d,
-                date_entered: d3.timeParse("%Y-%m-%d")(d.date_entered)
+                lineData
             }
         })
 
@@ -82,7 +105,8 @@ export class LineChart extends React.Component {
             .append('path')
             .attr('fill', 'none')
             .style('stroke', (d, i) => colorsFactPalette(i))
-            .attr('d', lineFunc(timeParsedData)) // the lineFunc needs to be passed an array of points
+            .style('stroke-width', '3px')
+            .attr('d', d => lineFunc(d.lineData)) // the lineFunc needs to be passed an array of points
 
         factors
             .attr('stroke-dasharray', totalLength + ' ' + totalLength)
