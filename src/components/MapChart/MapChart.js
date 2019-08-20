@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import {
     zombie_data
 } from './zombie-attacks'
-import { us_data } from './us'
+import { us_data } from './us' // this is the info we need to draw the map, download from website (bookmarked)
 import { city_data } from './us-cities'
 
 export class MapChart extends React.Component {
@@ -36,7 +36,7 @@ export class MapChart extends React.Component {
 
         const projection = d3
             .geoAlbersUsa()
-            .scale([chart_width])
+            .scale([chart_width]) // why is the chart width the scale?
             .translate([chart_width / 2, chart_height / 2]);
 
         const path = d3.geoPath(projection);
@@ -46,11 +46,12 @@ export class MapChart extends React.Component {
             .attr('width', chart_width)
             .attr('height', chart_height);
 
-        us_data.features.forEach((us_e, us_i) => {
+        us_data.features.forEach((us_e, us_i) => { // the features refers to each state
             zombie_data.forEach((z_e, z_i) => {
                 if (us_e.properties.name !== z_e.state) {
                     return null;
                 }
+                // this says add the zombie figure to the us_data 
                 us_data.features[us_i].properties.num = parseFloat(z_e.num);
             });
         });
@@ -68,27 +69,32 @@ export class MapChart extends React.Component {
             .attr('stroke', 'red')
             .attr('stroke-width', 1);
 
-        svg
-            .selectAll('circle')
+        const cityGroups = svg
+            .selectAll('.cityGroups')
             .data(city_data)
             .enter()
+            .append('g')
+            .attr('class', 'cityGroups')
+            .attr('transform', (d) => `translate(${projection([d.lon, d.lat])[0]}, ${projection([d.lon, d.lat])[1]})`)
+
+
+
+        cityGroups
             .append('circle')
+            .attr('r', 20)
+            .attr('r', (d) => Math.sqrt(parseInt(d.population) * 0.00005))
             .style('fill', 'pink')
             .style('opacity', 0.8)
-            .attr('cx', function (d) {
-                return projection([d.lon, d.lat])[0];
-            })
-            .attr('cy', function (d) {
-                return projection([d.lon, d.lat])[1];
-            })
-            .attr('r', function (d) {
-                return Math.sqrt(parseInt(d.population) * 0.00005);
-            })
-            .append('title')
-            .text(function (d) {
-                return d.city;
-            });
+            .attr('cx', '0')
+            .attr('cy', '0')
 
+        cityGroups
+            .append('text')
+            .text((d) => d.city)
+            .attr('font-family', 'sans-serif')
+            .attr('font-size', 8)
+            .attr('stroke', 'white')
+            .attr('stroke-width', '0.5')
     };
 
 
