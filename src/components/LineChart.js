@@ -9,26 +9,36 @@ export class LineChart extends React.Component {
                 {
                     label: "lineOne",
                     lineData: [
-                        { rating: 3, date_entered: '2018-02-12' },
-                        { rating: 4, date_entered: '2018-02-30' },
-                        { rating: 4, date_entered: '2018-03-01' },
-                        { rating: 5, date_entered: '2018-03-14' },
-                        { rating: 4, date_entered: '2018-03-30' },
-                        { rating: 2, date_entered: '2018-04-02' },
-                        { rating: 4, date_entered: '2018-04-15' },
-                        { rating: 6, date_entered: '2018-04-30' }]
+                        { rating: 1, date_entered: '2018-02-12' },
+                        { rating: 2, date_entered: '2018-02-30' },
+                        { rating: 2, date_entered: '2018-03-14' },
+                        { rating: 2.5, date_entered: '2018-03-30' },
+                        { rating: 3, date_entered: '2018-04-02' },
+                        { rating: 3.5, date_entered: '2018-04-15' },
+                        { rating: 4, date_entered: '2018-04-30' }]
                 },
                 {
                     label: "lineTwo",
                     lineData: [
                         { rating: 7, date_entered: '2018-02-12' },
                         { rating: 6, date_entered: '2018-02-30' },
-                        { rating: 6, date_entered: '2018-03-01' },
                         { rating: 5, date_entered: '2018-03-14' },
                         { rating: 4, date_entered: '2018-03-30' },
                         { rating: 3, date_entered: '2018-04-02' },
                         { rating: 2, date_entered: '2018-04-15' },
                         { rating: 2, date_entered: '2018-04-30' }
+                    ]
+                },
+                {
+                    label: "lineThree",
+                    lineData: [
+                        { rating: 2, date_entered: '2018-02-12' },
+                        { rating: 2, date_entered: '2018-02-30' },
+                        { rating: 4, date_entered: '2018-03-14' },
+                        { rating: 4, date_entered: '2018-03-30' },
+                        { rating: 5, date_entered: '2018-04-02' },
+                        { rating: 6, date_entered: '2018-04-15' },
+                        { rating: 6, date_entered: '2018-04-30' }
                     ]
                 }
 
@@ -52,7 +62,7 @@ export class LineChart extends React.Component {
             }
         })
 
-        const padding = 50
+        const padding = 75
 
         const x_scale = d3
             .scaleTime()
@@ -107,7 +117,7 @@ export class LineChart extends React.Component {
             .style('stroke', (d, i) => colorsFactPalette(i))
             .style('stroke-width', '3px')
             .attr('d', d => lineFunc(d.lineData)) // the lineFunc needs to be passed an array of points
-
+            .attr('class', d => d.label)
         factors
             .attr('stroke-dasharray', totalLength + ' ' + totalLength)
             .attr('stroke-dashoffset', totalLength)
@@ -116,38 +126,44 @@ export class LineChart extends React.Component {
             .ease(d3.easeLinear)
             .attr('stroke-dashoffset', 0);
 
-        const factLegend = svg
+        const legendItem = svg
             .selectAll('.legend')
             .data(timeParsedData)
             .enter()
             .append('g')
             .attr('transform', (d, i) => 'translate(' + (chart_width - 200) + ',' + (i * 15 + 60) + ')')
             .attr('class', '.legend')
+            .style('opacity', 1)
+            .on("mouseover", function (d) {
+                d3.select(this).style("cursor", "pointer")
+            })
+            .on('click', function (d) {
+                const legendKey = this;
+                const line = d3.select(`.${d.label}`)
+                if (legendKey.style.opacity == 1) {
+                    d3.select(legendKey).style('opacity', 0.3);
+                    line.style('display', 'none');
+                } else {
+                    d3.select(legendKey).style('opacity', 1);
+                    line.style('display', 'block');
+                }
+            });
 
+        legendItem
+            .append('text')
+            .text('test label')
+            .attr('transform', 'translate(20,10)')
+            .style('font-family', 'sans-serif')
 
-        factLegend
+        legendItem
             .append('rect')
             .attr('width', 10)
             .attr('height', 10)
             .attr('fill', (d, i) => colorsFactPalette(i))
-            .style('opacity', 1)
-            .on('click', function (d) {
-                const legendKey = this;
-                const lineForKey = document.querySelector('#factor-line');
-                if (legendKey.style.opacity == 1) {
-                    d3.select(legendKey).style('opacity', 0.25);
-                    d3.select(lineForKey).style('display', 'none');
-                } else {
-                    d3.select(legendKey).style('opacity', 1);
-                    d3.select(lineForKey).style('display', 'block');
-                }
-            });
 
 
-        factLegend
-            .append('text')
-            .text('test label')
-            .attr('transform', 'translate(20,10)')
+
+
 
     }
 
