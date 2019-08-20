@@ -2,52 +2,50 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class LineChart extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [
-                {
-                    label: "lineOne",
-                    lineData: [
-                        { rating: 1, date_entered: '2018-02-12' },
-                        { rating: 2, date_entered: '2018-02-30' },
-                        { rating: 2, date_entered: '2018-03-14' },
-                        { rating: 2.5, date_entered: '2018-03-30' },
-                        { rating: 3, date_entered: '2018-04-02' },
-                        { rating: 3.5, date_entered: '2018-04-15' },
-                        { rating: 4, date_entered: '2018-04-30' }]
-                },
-                {
-                    label: "lineTwo",
-                    lineData: [
-                        { rating: 7, date_entered: '2018-02-12' },
-                        { rating: 6, date_entered: '2018-02-30' },
-                        { rating: 5, date_entered: '2018-03-14' },
-                        { rating: 4, date_entered: '2018-03-30' },
-                        { rating: 3, date_entered: '2018-04-02' },
-                        { rating: 2, date_entered: '2018-04-15' },
-                        { rating: 2, date_entered: '2018-04-30' }
-                    ]
-                },
-                {
-                    label: "lineThree",
-                    lineData: [
-                        { rating: 2, date_entered: '2018-02-12' },
-                        { rating: 2, date_entered: '2018-02-30' },
-                        { rating: 4, date_entered: '2018-03-14' },
-                        { rating: 4, date_entered: '2018-03-30' },
-                        { rating: 5, date_entered: '2018-04-02' },
-                        { rating: 6, date_entered: '2018-04-15' },
-                        { rating: 6, date_entered: '2018-04-30' }
-                    ]
-                }
+    state = {
+        data: [
+            {
+                label: "lineOne",
+                lineData: [
+                    { rating: 1, date_entered: '2018-02-12' },
+                    { rating: 2, date_entered: '2018-02-30' },
+                    { rating: 2, date_entered: '2018-03-14' },
+                    { rating: 2.5, date_entered: '2018-03-30' },
+                    { rating: 3, date_entered: '2018-04-02' },
+                    { rating: 3.5, date_entered: '2018-04-15' },
+                    { rating: 4, date_entered: '2018-04-30' }]
+            },
+            {
+                label: "lineTwo",
+                lineData: [
+                    { rating: 7, date_entered: '2018-02-12' },
+                    { rating: 6, date_entered: '2018-02-30' },
+                    { rating: 5, date_entered: '2018-03-14' },
+                    { rating: 4, date_entered: '2018-03-30' },
+                    { rating: 3, date_entered: '2018-04-02' },
+                    { rating: 2, date_entered: '2018-04-15' },
+                    { rating: 2, date_entered: '2018-04-30' }
+                ]
+            },
+            {
+                label: "lineThree",
+                lineData: [
+                    { rating: 2, date_entered: '2018-02-12' },
+                    { rating: 2, date_entered: '2018-02-30' },
+                    { rating: 4, date_entered: '2018-03-14' },
+                    { rating: 4, date_entered: '2018-03-30' },
+                    { rating: 5, date_entered: '2018-04-02' },
+                    { rating: 6, date_entered: '2018-04-15' },
+                    { rating: 6, date_entered: '2018-04-30' }
+                ]
+            }
 
-            ],
+        ],
 
-            chart_width: 600,
-            chart_height: 400
-        }
-    };
+        chart_width: 600,
+        chart_height: 400
+    }
+
 
     componentDidMount() {
         const { data, chart_height, chart_width } = this.state

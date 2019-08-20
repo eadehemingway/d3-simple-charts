@@ -10,6 +10,7 @@ import { Donut } from './Donut'
 import { ThinDonut } from './ThinDonut';
 import { BarChart } from './BarChart';
 import { LineChart } from './LineChart';
+import { MapChart } from './MapChart/MapChart'
 
 export class App extends React.Component {
   state = {
@@ -29,6 +30,7 @@ export class App extends React.Component {
             <Route exact path="/donut" component={Donut} />
             <Route exact path="/barchart" component={BarChart} />
             <Route exact path="/linechart" component={LineChart} />
+            <Route exact path="/map" component={MapChart} />
 
           </Switch>
         </div>

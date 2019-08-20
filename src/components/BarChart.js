@@ -2,30 +2,29 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class BarChart extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [
-                { key: 0, num: 6 },
-                { key: 1, num: 20 },
-                { key: 2, num: 21 },
-                { key: 3, num: 14 },
-                { key: 4, num: 2 },
-                { key: 5, num: 30 },
-                { key: 6, num: 7 },
-                { key: 7, num: 16 },
-                { key: 8, num: 25 },
-                { key: 9, num: 5 },
-                { key: 10, num: 11 },
-                { key: 11, num: 28 },
-                { key: 12, num: 10 },
-                { key: 13, num: 26 },
-                { key: 14, num: 9 }
-            ],
-            chart_width: 800,
-            chart_height: 400
-        };
-    }
+
+    state = {
+        data: [
+            { key: 0, num: 6 },
+            { key: 1, num: 20 },
+            { key: 2, num: 21 },
+            { key: 3, num: 14 },
+            { key: 4, num: 2 },
+            { key: 5, num: 30 },
+            { key: 6, num: 7 },
+            { key: 7, num: 16 },
+            { key: 8, num: 25 },
+            { key: 9, num: 5 },
+            { key: 10, num: 11 },
+            { key: 11, num: 28 },
+            { key: 12, num: 10 },
+            { key: 13, num: 26 },
+            { key: 14, num: 9 }
+        ],
+        chart_width: 800,
+        chart_height: 400
+    };
+
     componentDidMount() {
         const { chart_width, chart_height } = this.state;
         d3.select('svg')

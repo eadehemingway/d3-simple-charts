@@ -3,29 +3,26 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class Donut extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [
-        { name: "USA", value: 40 },
-        { name: "UK", value: 20 },
-        { name: "France", value: 30 },
-        { name: "Hungry", value: 10 },
+  state = {
+    data: [
+      { name: "USA", value: 40 },
+      { name: "UK", value: 20 },
+      { name: "France", value: 30 },
+      { name: "Hungry", value: 10 },
 
 
 
-      ],
-      padAngle: 0,
-      colors: [
-        "rgba(211, 101, 67,0.7)",
-        "rgb(173,83,55)",
-        "rgb(211,101,67)",
-        "rgb(219,129,101)",
-        "rgba(211, 101, 67,0.7)",
-        "rgb(173,83,55)",
-      ]
-    };
-  }
+    ],
+    padAngle: 0,
+    colors: [
+      "rgba(211, 101, 67,0.7)",
+      "rgb(173,83,55)",
+      "rgb(211,101,67)",
+      "rgb(219,129,101)",
+      "rgba(211, 101, 67,0.7)",
+      "rgb(173,83,55)",
+    ]
+  };
 
   componentDidMount() {
     const { data, colors } = this.state
