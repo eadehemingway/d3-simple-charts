@@ -11,14 +11,18 @@ export class Donut extends React.Component {
         { name: "UK", value: 20 },
         { name: "France", value: 30 },
         { name: "Hungry", value: 10 },
+
+
+
       ],
       padAngle: 0,
       colors: [
-        "rgb(77,87,127)",
         "rgba(211, 101, 67,0.7)",
         "rgb(173,83,55)",
         "rgb(211,101,67)",
-        "rgb(219,129,101)"
+        "rgb(219,129,101)",
+        "rgba(211, 101, 67,0.7)",
+        "rgb(173,83,55)",
       ]
     };
   }
@@ -26,7 +30,7 @@ export class Donut extends React.Component {
   componentDidMount() {
     const { data, colors } = this.state
 
-    const width = 600;
+    const width = 800;
     const height = 500;
 
     const svg = d3.select('svg')
@@ -43,7 +47,7 @@ export class Donut extends React.Component {
 
     const arc = d3.arc()
       .innerRadius(50)
-      .outerRadius(100);
+      .outerRadius(200);
 
     const pie = d3.pie()
       .padAngle(0.05)

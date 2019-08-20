@@ -17,6 +17,8 @@ export class Nav extends React.Component {
         <Link className="nav-link" to="/force">FORCE</Link>
         <Link className="nav-link" to="/forcewithlinks">FORCE WITH LINKS</Link>
         <Link className="nav-link" to="/donut">DONUT</Link>
+        <Link className="nav-link" to="/barchart">BARCHART</Link>
+        <Link className="nav-link" to="/linechart">LINECHART</Link>
 
 
       </div>

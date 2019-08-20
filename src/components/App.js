@@ -8,6 +8,8 @@ import { Nav } from './Nav'
 import { Home } from './Home'
 import { Donut } from './Donut'
 import { ThinDonut } from './ThinDonut';
+import { BarChart } from './BarChart';
+import { LineChart } from './LineChart';
 
 export class App extends React.Component {
   state = {
@@ -25,6 +27,8 @@ export class App extends React.Component {
             <Route exact path="/force" component={Force} />
             <Route exact path="/forcewithlinks" component={ForceWithLinks} />
             <Route exact path="/donut" component={Donut} />
+            <Route exact path="/barchart" component={BarChart} />
+            <Route exact path="/linechart" component={LineChart} />
 
           </Switch>
         </div>
