@@ -36,7 +36,10 @@ export class Nav extends React.Component {
           TREE
         </Link>
         <Link className="nav-link" to="/matrix">
-          MATRIX
+          DOT MATRIX
+        </Link>
+        <Link className="nav-link" to="/matrix-people">
+          PEOPLE MATRIX
         </Link>
       </div>
     )

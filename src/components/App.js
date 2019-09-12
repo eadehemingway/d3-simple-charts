@@ -13,6 +13,7 @@ import { LineChart } from './LineChart'
 import { TreeChart } from './TreeChart'
 import { Matrix } from './Matrix'
 import { MapChart } from './MapChart/MapChart'
+import { MatrixPeople } from './MatrixPeople'
 
 export class App extends React.Component {
   state = {}
@@ -33,6 +34,7 @@ export class App extends React.Component {
             <Route exact path="/map" component={MapChart} />
             <Route exact path="/tree" component={TreeChart} />
             <Route exact path="/matrix" component={Matrix} />
+            <Route exact path="/matrix-people" component={MatrixPeople} />
           </Switch>
         </div>
       </BrowserRouter>
