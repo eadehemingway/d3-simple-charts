@@ -52,7 +52,7 @@ export class ThinDonut extends React.Component {
       .data(pie(data))
       .enter()
       .append('path')
-      .attr('fill', 'lightslategrey')
+      .attr('fill', 'lightsteelblue')
       .attr('stroke', 'linen')
       .attr('stroke-width', '3px')
 

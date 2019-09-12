@@ -54,7 +54,7 @@ export class TreeChart extends React.Component {
       .enter()
       .append('path')
       .attr('class', 'link')
-      .style('stroke', 'grey')
+      .style('stroke', 'lightsteelblue')
       .style('stroke-width', '2px')
       .attr('fill', 'none')
       .attr('d', d => {
