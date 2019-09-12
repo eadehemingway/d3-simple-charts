@@ -41,6 +41,9 @@ export class Nav extends React.Component {
         <Link className="nav-link" to="/matrix-people">
           PEOPLE MATRIX
         </Link>
+        <Link className="nav-link" to="/sankey">
+          SANKEY
+        </Link>
       </div>
     )
   }

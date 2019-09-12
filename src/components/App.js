@@ -14,6 +14,7 @@ import { TreeChart } from './TreeChart'
 import { Matrix } from './Matrix'
 import { MapChart } from './MapChart/MapChart'
 import { MatrixPeople } from './MatrixPeople'
+import { Sankey } from './Sankey'
 
 export class App extends React.Component {
   state = {}
@@ -35,6 +36,7 @@ export class App extends React.Component {
             <Route exact path="/tree" component={TreeChart} />
             <Route exact path="/matrix" component={Matrix} />
             <Route exact path="/matrix-people" component={MatrixPeople} />
+            <Route exact path="/sankey" component={Sankey} />
           </Switch>
         </div>
       </BrowserRouter>
