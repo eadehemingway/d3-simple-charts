@@ -124,6 +124,8 @@ export class TreeChart extends React.Component {
       .attr('dy', '.35em')
       .attr('x', 20)
       .text(d => d.data.name)
+      .attr('font-family', 'futura')
+      .attr('fill', 'lightslategray')
 
     node
       .transition()

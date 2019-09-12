@@ -7,8 +7,8 @@ export class Home extends React.Component {
   componentDidMount() {
     const fiveThousand = d3.range(1000).map((n, i) => ({ id: i, num: n }))
     d3.select('svg')
-      .attr('width', 500)
-      .attr('height', 500)
+      .attr('width', 800)
+      .attr('height', 700)
 
     this.setState({ data: fiveThousand })
 
@@ -68,7 +68,7 @@ export class Home extends React.Component {
       .attr('font-size', '70px')
       .attr('font-weight', 'bold')
       .attr('font-family', 'sans-serif')
-      .attr('fill', 'white')
+      .attr('fill', 'snow')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
   }

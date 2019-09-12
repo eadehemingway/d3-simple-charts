@@ -46,9 +46,9 @@ export class Matrix extends React.Component {
       case 'gaza':
         return 0
       case 'khaleel':
-        return 100
-      case 'london':
         return 200
+      case 'london':
+        return 400
     }
   }
 
@@ -65,12 +65,35 @@ export class Matrix extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const boxPadding = 50
-    const dotsPerRow = 4
+    const leftBoxPadding = 5
+    const topBoxPadding = 50
+    const dotsPerRow = 6
     const radius = 5
-    d3.select('svg')
+    const campuses = data.reduce((acc, curr) => {
+      if (!acc.includes(curr.campus)) acc.push(curr.campus)
+      return acc
+    }, [])
+
+    const svg = d3
+      .select('svg')
       .attr('width', 700)
       .attr('height', 500)
+
+    const labels = svg
+      .selectAll('text')
+      .data(campuses)
+      .enter()
+      .append('text')
+      .text(d => d)
+      .attr('x', d => this.campusXCoordinate(d) + leftBoxPadding - 5)
+      .attr(
+        'y',
+        d => this.getY2Coordinate(0, dotsPerRow, radius) + topBoxPadding - 30
+      )
+      .attr('font-family', 'futura')
+      .attr('fill', 'lightslategray')
+
+    svg
       .selectAll('circle')
       .data(data)
       .enter()
@@ -78,11 +101,11 @@ export class Matrix extends React.Component {
       .attr('r', radius)
       .attr(
         'cy',
-        () => this.getY2Coordinate(0, dotsPerRow, radius) + boxPadding
+        () => this.getY2Coordinate(0, dotsPerRow, radius) + topBoxPadding
       )
       .attr('cx', d => {
         const campusXCoordinate = this.campusXCoordinate(d.campus)
-        return campusXCoordinate + boxPadding
+        return campusXCoordinate + leftBoxPadding
       })
       .attr('fill', d => this.getColorForCampus(d.campus))
 
@@ -91,7 +114,7 @@ export class Matrix extends React.Component {
       .duration(500)
       .attr('cy', d => {
         const index = this.findIndexOfDataInGroup(d)
-        return this.getY2Coordinate(index, dotsPerRow, radius) + boxPadding
+        return this.getY2Coordinate(index, dotsPerRow, radius) + topBoxPadding
       })
       .attr('cx', d => {
         const campusXCoordinate = this.campusXCoordinate(d.campus)
@@ -99,7 +122,7 @@ export class Matrix extends React.Component {
         return (
           campusXCoordinate +
           this.getX2Coordinate(index, dotsPerRow, radius) +
-          boxPadding
+          leftBoxPadding
         )
       })
   }

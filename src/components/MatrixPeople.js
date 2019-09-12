@@ -46,9 +46,9 @@ export class MatrixPeople extends React.Component {
       case 'gaza':
         return 0
       case 'khaleel':
-        return 150
+        return 200
       case 'london':
-        return 300
+        return 400
     }
   }
 
@@ -65,12 +65,36 @@ export class MatrixPeople extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const boxPadding = 50
-    const dotsPerRow = 4
+
+    const dotsPerRow = 5
     const radius = 8
-    d3.select('svg')
+    const leftBoxPadding = 5
+    const topBoxPadding = 50
+    const campuses = data.reduce((acc, curr) => {
+      if (!acc.includes(curr.campus)) acc.push(curr.campus)
+      return acc
+    }, [])
+
+    const svg = d3
+      .select('svg')
       .attr('width', 700)
       .attr('height', 500)
+
+    const labels = svg
+      .selectAll('text')
+      .data(campuses)
+      .enter()
+      .append('text')
+      .text(d => d)
+      .attr('x', d => this.campusXCoordinate(d) + leftBoxPadding)
+      .attr(
+        'y',
+        d => this.getY2Coordinate(0, dotsPerRow, radius) + topBoxPadding - 30
+      )
+      .attr('font-family', 'futura')
+      .attr('fill', 'lightslategray')
+
+    svg
       .selectAll('circle')
       .data(data)
       .enter()
@@ -82,8 +106,8 @@ export class MatrixPeople extends React.Component {
       )
       .attr('transform', d => {
         const campusXCoordinate = this.campusXCoordinate(d.campus)
-        const x = campusXCoordinate + boxPadding
-        const y = this.getY2Coordinate(0, dotsPerRow, radius) + boxPadding
+        const x = campusXCoordinate + leftBoxPadding
+        const y = this.getY2Coordinate(0, dotsPerRow, radius) + topBoxPadding
         return 'translate(' + x + ',' + y + ')'
       })
       .attr('fill', d => this.getColorForCampus(d.campus))
@@ -97,9 +121,10 @@ export class MatrixPeople extends React.Component {
         const x =
           campusXCoordinate +
           this.getX2Coordinate(index, dotsPerRow, radius) +
-          boxPadding
+          leftBoxPadding
 
-        const y = this.getY2Coordinate(index, dotsPerRow, radius) + boxPadding
+        const y =
+          this.getY2Coordinate(index, dotsPerRow, radius) + topBoxPadding
 
         return 'translate(' + x + ',' + y + ')'
       })
