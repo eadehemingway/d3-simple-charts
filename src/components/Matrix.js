@@ -29,36 +29,45 @@ export class Matrix extends React.Component {
       { id: 27, campus: 'london', gender: 'female', role: 'student' }
     ]
   }
-  // getX1Coordinate = (d) => {
-
-  // }
-
-  getX2Coordinate = (index, dotsPerRow, circleWidth) => {
-    const placeInRow = index % dotsPerRow
-    const circlePadding = 5
-    const boxPadding = 50
-    return placeInRow * (circleWidth + circlePadding) + boxPadding
-  }
-  getYCoordinate = (index, dotsPerRow, circleWidth) => {
+  getY2Coordinate = (index, dotsPerRow, radius) => {
     const placeInCol = Math.floor(index / dotsPerRow)
     const circlePadding = 5
-    const boxPadding = 50
-    return placeInCol * (circlePadding + circleWidth) + boxPadding
+    return placeInCol * (circlePadding + radius * 2)
   }
+
+  getX2Coordinate = (index, dotsPerRow, radius) => {
+    const placeInRow = index % dotsPerRow
+    const circlePadding = 5
+    return placeInRow * (radius * 2 + circlePadding)
+  }
+
   campusXCoordinate = campus => {
     switch (campus) {
       case 'gaza':
         return 0
       case 'khaleel':
-        return 200
+        return 100
       case 'london':
-        return 400
+        return 200
+    }
+  }
+
+  getColorForCampus = campus => {
+    switch (campus) {
+      case 'gaza':
+        return 'coral'
+      case 'khaleel':
+        return 'steelblue'
+      case 'london':
+        return 'lightsteelblue'
     }
   }
 
   componentDidMount() {
     const { data } = this.state
-
+    const boxPadding = 50
+    const dotsPerRow = 4
+    const radius = 5
     d3.select('svg')
       .attr('width', 700)
       .attr('height', 500)
@@ -66,17 +75,33 @@ export class Matrix extends React.Component {
       .data(data)
       .enter()
       .append('circle')
-      .attr('r', 5)
-      .attr('cy', (d, i) => {
-        const index = this.findIndexOfDataInGroup(d)
-        return this.getYCoordinate(index, 4, 10)
+      .attr('r', radius)
+      .attr(
+        'cy',
+        () => this.getY2Coordinate(0, dotsPerRow, radius) + boxPadding
+      )
+      .attr('cx', d => {
+        const campusXCoordinate = this.campusXCoordinate(d.campus)
+        return campusXCoordinate + boxPadding
       })
-      .attr('cx', (d, i) => {
+      .attr('fill', d => this.getColorForCampus(d.campus))
+
+    d3.selectAll('circle')
+      .transition()
+      .duration(500)
+      .attr('cy', d => {
+        const index = this.findIndexOfDataInGroup(d)
+        return this.getY2Coordinate(index, dotsPerRow, radius) + boxPadding
+      })
+      .attr('cx', d => {
         const campusXCoordinate = this.campusXCoordinate(d.campus)
         const index = this.findIndexOfDataInGroup(d)
-        return this.getX2Coordinate(index, 4, 10) + campusXCoordinate
+        return (
+          campusXCoordinate +
+          this.getX2Coordinate(index, dotsPerRow, radius) +
+          boxPadding
+        )
       })
-      .attr('fill', 'pink')
   }
 
   findIndexOfDataInGroup = d => {
