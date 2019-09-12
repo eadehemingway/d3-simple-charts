@@ -8,28 +8,6 @@ export class Home extends React.Component {
   componentDidMount() {
     const fiveThousand = d3.range(0, 1000).map((n, i) => ({ id: i, num: n }))
 
-    this.setState({ data: fiveThousand }, () => {
-      const svg = d3
-        .select('svg')
-        .attr('width', 2000)
-        .attr('height', 2000)
-
-      svg
-        .selectAll('circle')
-        .data(fiveThousand)
-        .enter()
-        .append('circle')
-        .attr('r', 4)
-        .attr('class', 'bubble')
-        .attr('fill', 'red')
-
-      this.createSimulation()
-    })
-  }
-
-  createSimulation = () => {
-    const { data } = this.state
-
     const forceX = d3
       .forceX()
       .x(350)
@@ -37,17 +15,18 @@ export class Home extends React.Component {
 
     const forceY = d3
       .forceY()
-      .y(300)
+      .y(350)
       .strength(0.5)
 
     const collision = d3.forceCollide(12).strength(0.1)
 
-    d3.forceSimulation(data)
+    d3.forceSimulation(fiveThousand)
       .force('collision', collision)
       .force('x', forceX)
       .force('y', forceY)
       .alpha(0.01) // small alpha to have the elements move at a slower pace
       .alphaDecay(0)
+      .tick(800) // this makes it appear in the middle immediately ...
       .on('tick', () => {
         // call the tick function running the simulation
         d3.selectAll('.bubble').attr(
@@ -55,12 +34,37 @@ export class Home extends React.Component {
           d => `translate(${d.x} ${d.y})`
         )
       })
+    const svg = d3
+      .select('svg')
+      .attr('width', 2000)
+      .attr('height', 2000)
+
+    svg
+      .selectAll('circle')
+      .data(fiveThousand)
+      .enter()
+      .append('circle')
+      .attr('r', 4)
+      .attr('class', 'bubble')
+      .attr('fill', 'coral')
+      .attr('transform', d => `translate(${d.x} ${d.y})`)
+
+    svg
+      .append('text')
+      .text('HOME')
+      .attr('x', 350)
+      .attr('y', 350)
+      .attr('font-size', '70px')
+      .attr('font-weight', 'bold')
+      .attr('font-family', 'sans-serif')
+      .attr('fill', '#fff')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
   }
 
   render() {
     return (
       <section>
-        <h1 className="graph-title"> HOME</h1>
         <svg></svg>
       </section>
     )
