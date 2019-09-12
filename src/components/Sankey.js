@@ -27,7 +27,7 @@ export class Sankey extends React.Component {
   componentDidMount() {
     const { data } = this.state
     const san = sankey()
-      .size([500, 600])
+      .size([500, 300])
       .nodeId(d => d.id)
       .nodeWidth(20)
       .nodePadding(10)
@@ -45,7 +45,7 @@ export class Sankey extends React.Component {
       .data(graph.links)
       .enter()
       .append('path')
-      .classed('link', true)
+      .attr('class', 'link')
       .attr('d', sankeyLinkHorizontal())
       .attr('fill', 'none')
       .attr('stroke', 'lightsteelblue')
@@ -68,17 +68,7 @@ export class Sankey extends React.Component {
       .attr('fill', 'steelblue')
       .attr('opacity', 0.8)
       .attr('transform', d => 'translate(100,200)')
-      .call(
-        d3
-          .drag()
-          .subject(function(d) {
-            return d
-          })
-          .on('start', function() {
-            this.parentNode.appendChild(this)
-          })
-          .on('drag', dragmove)
-      )
+      .call(d3.drag().on('drag', dragmove))
 
     function dragmove(d) {
       const rectY = d3.select(this).attr('y')

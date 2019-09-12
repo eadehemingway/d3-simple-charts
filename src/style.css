@@ -45,3 +45,7 @@ body {
   color: lightslategray;
   margin-top: 2rem;
 }
+
+.link:hover {
+  opacity: 1 !important;
+}
