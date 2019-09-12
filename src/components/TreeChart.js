@@ -42,29 +42,46 @@ export class TreeChart extends React.Component {
     const { data } = this.state
     const padding = 50
     const treemap = d3.tree().size([500, 500])
-    let nodes = d3.hierarchy(data, d => d.children)
-    nodes = treemap(nodes)
+    const nodes = treemap(d3.hierarchy(data, d => d.children))
 
     const svg = d3
       .select('svg')
       .attr('width', 700)
       .attr('height', 500)
-
-    const node = svg
-      .selectAll('.node')
-      .data(nodes.descendants())
-      .enter()
-      .append('g')
-      .attr('transform', d => 'translate(' + (d.y + padding) + ',' + d.x + ')')
-
     const link = svg
       .selectAll('.link')
-      .data(nodes.descendants().slice(1))
+      .data(nodes.descendants().slice(1)) // this cuts off the first node cos that doesnt have links going to it
       .enter()
       .append('path')
       .attr('class', 'link')
-      .style('stroke', 'black')
+      .style('stroke', 'grey')
+      .style('stroke-width', '2px')
       .attr('fill', 'none')
+      .attr('d', d => {
+        return (
+          'M' +
+          nodes.y +
+          ',' +
+          nodes.x +
+          'C' +
+          nodes.y / 2 +
+          ',' +
+          d.x +
+          ' ' +
+          nodes.y / 2 +
+          ',' +
+          nodes.x +
+          ' ' +
+          nodes.y +
+          ',' +
+          nodes.x
+        )
+      })
+      .attr('transform', d => 'translate(' + padding + ',0)')
+
+    link
+      .transition()
+      .duration(1000)
       .attr('d', d => {
         return (
           'M' +
@@ -85,20 +102,33 @@ export class TreeChart extends React.Component {
           d.parent.x
         )
       })
-      .attr('transform', d => 'translate(' + padding + ',0)')
+
+    const node = svg
+      .selectAll('.node')
+      .data(nodes.descendants())
+      .enter()
+      .append('g')
+      .attr(
+        'transform',
+        d => 'translate(' + (nodes.y + padding) + ',' + nodes.x + ')'
+      )
 
     node
       .append('circle')
       .attr('r', 10)
       .style('stroke', 'red')
-      .style('fill', 'pink')
+      .style('fill', 'white')
 
     node
       .append('text')
       .attr('dy', '.35em')
-      .attr('x', d => (d.children ? (d.data.value + 5) * -1 : d.data.value + 5))
-      .attr('y', d => (d.children && d.depth !== 0 ? -(d.data.value + 5) : d))
+      .attr('x', 20)
       .text(d => d.data.name)
+
+    node
+      .transition()
+      .duration(1000)
+      .attr('transform', d => 'translate(' + (d.y + padding) + ',' + d.x + ')')
   }
   render() {
     return (
