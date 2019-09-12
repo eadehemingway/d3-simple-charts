@@ -27,7 +27,7 @@ export class Home extends React.Component {
 
     this.setState({ data: fiveThousand })
 
-    setTimeout(() => this.redraw(), 50)
+    setTimeout(() => this.redraw(), 50) // adding a timeout so that the page loads with something while waiting for the d3
   }
 
   redraw = () => {
