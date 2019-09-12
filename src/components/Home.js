@@ -6,8 +6,32 @@ export class Home extends React.Component {
   state = { data: [] }
 
   componentDidMount() {
-    const fiveThousand = d3.range(0, 1000).map((n, i) => ({ id: i, num: n }))
+    const fiveThousand = d3.range(1000).map((n, i) => ({ id: i, num: n }))
+    const svg = d3
+      .select('svg')
+      .attr('width', 2000)
+      .attr('height', 2000)
 
+    svg
+      .append('text')
+      .text('HOME')
+      .attr('x', 350)
+      .attr('y', 350)
+      .attr('font-size', '70px')
+      .attr('font-weight', 'bold')
+      .attr('font-family', 'sans-serif')
+      .attr('fill', 'coral')
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle')
+      .attr('opacity', 0.4)
+
+    this.setState({ data: fiveThousand })
+
+    setTimeout(() => this.redraw(), 50)
+  }
+
+  redraw = () => {
+    const { data } = this.state
     const forceX = d3
       .forceX()
       .x(350)
@@ -20,7 +44,7 @@ export class Home extends React.Component {
 
     const collision = d3.forceCollide(12).strength(0.1)
 
-    d3.forceSimulation(fiveThousand)
+    d3.forceSimulation(data)
       .force('collision', collision)
       .force('x', forceX)
       .force('y', forceY)
@@ -34,20 +58,24 @@ export class Home extends React.Component {
           d => `translate(${d.x} ${d.y})`
         )
       })
-    const svg = d3
-      .select('svg')
-      .attr('width', 2000)
-      .attr('height', 2000)
+
+    const svg = d3.select('svg')
 
     svg
       .selectAll('circle')
-      .data(fiveThousand)
+      .data(data)
       .enter()
       .append('circle')
       .attr('r', 4)
       .attr('class', 'bubble')
-      .attr('fill', 'coral')
       .attr('transform', d => `translate(${d.x} ${d.y})`)
+      .attr('fill', 'coral')
+      .attr('opacity', '0')
+
+    d3.selectAll('.bubble')
+      .transition()
+      .duration(750)
+      .attr('opacity', '0.4')
 
     svg
       .append('text')
@@ -57,7 +85,7 @@ export class Home extends React.Component {
       .attr('font-size', '70px')
       .attr('font-weight', 'bold')
       .attr('font-family', 'sans-serif')
-      .attr('fill', '#fff')
+      .attr('fill', 'white')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
   }
