@@ -40,25 +40,22 @@ export class TreeChart extends React.Component {
   }
   componentDidMount() {
     const { data } = this.state
-
+    const padding = 50
     const treemap = d3.tree().size([500, 500])
     let nodes = d3.hierarchy(data, d => d.children)
     nodes = treemap(nodes)
+
     const svg = d3
       .select('svg')
-      .attr('width', 2000)
-      .attr('height', 2000)
+      .attr('width', 700)
+      .attr('height', 500)
 
     const node = svg
       .selectAll('.node')
       .data(nodes.descendants())
       .enter()
       .append('g')
-      .attr(
-        'class',
-        d => 'node' + (d.children ? ' node--internal' : ' node--leaf')
-      )
-      .attr('transform', d => 'translate(' + d.y + ',' + d.x + ')')
+      .attr('transform', d => 'translate(' + (d.y + padding) + ',' + d.x + ')')
 
     const link = svg
       .selectAll('.link')
@@ -67,6 +64,7 @@ export class TreeChart extends React.Component {
       .append('path')
       .attr('class', 'link')
       .style('stroke', 'black')
+      .attr('fill', 'none')
       .attr('d', d => {
         return (
           'M' +
@@ -87,6 +85,7 @@ export class TreeChart extends React.Component {
           d.parent.x
         )
       })
+      .attr('transform', d => 'translate(' + padding + ',0)')
 
     node
       .append('circle')
@@ -99,7 +98,6 @@ export class TreeChart extends React.Component {
       .attr('dy', '.35em')
       .attr('x', d => (d.children ? (d.data.value + 5) * -1 : d.data.value + 5))
       .attr('y', d => (d.children && d.depth !== 0 ? -(d.data.value + 5) : d))
-      .style('text-anchor', d => (d.children ? 'end' : 'start'))
       .text(d => d.data.name)
   }
   render() {
