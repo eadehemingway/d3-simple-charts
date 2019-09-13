@@ -8,7 +8,7 @@ export class Home extends React.Component {
     const fiveThousand = d3.range(1000).map((n, i) => ({ id: i, num: n }))
     d3.select('svg')
       .attr('width', 800)
-      .attr('height', 700)
+      .attr('height', 600)
 
     this.setState({ data: fiveThousand })
 
@@ -75,7 +75,7 @@ export class Home extends React.Component {
 
   render() {
     return (
-      <section>
+      <section className="home-page">
         <svg></svg>
       </section>
     )

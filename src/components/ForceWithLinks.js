@@ -132,7 +132,8 @@ export class ForceWithLinks extends React.Component {
   }
 
   componentDidMount() {
-    const width = 600
+    const width = Math.max(window.innerWidth - 600, 500)
+
     const height = 500
     const { data } = this.state
 
@@ -217,7 +218,7 @@ export class ForceWithLinks extends React.Component {
   render() {
     return (
       <section className="page-excl-nav">
-        <h1 className="graph-title"> FORCE WITH LINKS</h1>
+        <h1 className="graph-title"> Force directed with links</h1>
         <svg></svg>
       </section>
     )

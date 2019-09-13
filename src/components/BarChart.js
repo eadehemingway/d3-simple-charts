@@ -20,8 +20,8 @@ export class BarChart extends React.Component {
       { key: 13, num: 26 },
       { key: 14, num: 9 }
     ],
-    chart_width: 800,
-    chart_height: 400
+    chart_width: Math.max(window.innerWidth - 600, 500),
+    chart_height: 500
   }
 
   componentDidMount() {
@@ -128,19 +128,15 @@ export class BarChart extends React.Component {
   render() {
     return (
       <section className="page-excl-nav">
-        <h1 className="graph-title"> BAR CHART</h1>
+        <h1 className="graph-title"> Bar chart</h1>
         <div id="chart" />
         <svg></svg>
 
         <div className="button-container">
-          <button id="increase" className="increase-btn" onClick={this.addBar}>
+          <button id="increase" className="btn" onClick={this.addBar}>
             +
           </button>
-          <button
-            id="decrease"
-            className="decrease-btn"
-            onClick={this.removeBar}
-          >
+          <button id="decrease" className="btn" onClick={this.removeBar}>
             -
           </button>
         </div>

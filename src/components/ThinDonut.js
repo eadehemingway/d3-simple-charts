@@ -12,9 +12,9 @@ export class ThinDonut extends React.Component {
       () => this.setState({ data: this.makeData(20) }),
       1500
     )
-    const width = 600
-    const height = 500
 
+    const width = Math.max(window.innerWidth - 600, 500)
+    const height = 500
     const svg = d3
       .select('svg')
       .attr('width', width)
@@ -53,7 +53,7 @@ export class ThinDonut extends React.Component {
       .enter()
       .append('path')
       .attr('fill', 'lightsteelblue')
-      .attr('stroke', 'linen')
+      .attr('stroke', 'snow')
       .attr('stroke-width', '3px')
 
     const updateSelection = enterSelection.merge(arcSelection)
@@ -77,7 +77,7 @@ export class ThinDonut extends React.Component {
   render() {
     return (
       <section className="page-excl-nav">
-        <h1 className="graph-title"> thin donut</h1>
+        <h1 className="graph-title"> Thin donut</h1>
         <svg />
       </section>
     )

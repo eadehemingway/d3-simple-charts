@@ -11,9 +11,8 @@ import { ThinDonut } from './ThinDonut'
 import { BarChart } from './BarChart'
 import { LineChart } from './LineChart'
 import { TreeChart } from './TreeChart'
-import { Matrix } from './Matrix'
 import { MapChart } from './MapChart/MapChart'
-import { MatrixPeople } from './MatrixPeople'
+import { Matrix } from './Matrix'
 import { Sankey } from './Sankey'
 
 export class App extends React.Component {
@@ -35,7 +34,6 @@ export class App extends React.Component {
             <Route exact path="/map" component={MapChart} />
             <Route exact path="/tree" component={TreeChart} />
             <Route exact path="/matrix" component={Matrix} />
-            <Route exact path="/matrix-people" component={MatrixPeople} />
             <Route exact path="/sankey" component={Sankey} />
           </Switch>
         </div>

@@ -7,23 +7,18 @@ export class Donut extends React.Component {
       { name: 'USA', value: 40 },
       { name: 'UK', value: 20 },
       { name: 'France', value: 30 },
-      { name: 'Hungry', value: 10 }
+      { name: 'Hungry', value: 10 },
+      { name: 'Latvia', value: 14 },
+      { name: 'Turkey', value: 16 },
+      { name: 'Spain', value: 20 }
     ],
-    padAngle: 0,
-    colors: [
-      'rgba(211, 101, 67,0.7)',
-      'rgb(173,83,55)',
-      'rgb(211,101,67)',
-      'rgb(219,129,101)',
-      'rgba(211, 101, 67,0.7)',
-      'rgb(173,83,55)'
-    ]
+    padAngle: 0
   }
 
   componentDidMount() {
-    const { data, colors } = this.state
+    const { data } = this.state
 
-    const width = 800
+    const width = Math.max(window.innerWidth - 600, 500)
     const height = 500
 
     const svg = d3
@@ -34,17 +29,18 @@ export class Donut extends React.Component {
 
     const donutGroup = svg
       .append('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      .attr('transform', 'translate(' + 300 + ',' + height / 2 + ')')
 
     donutGroup
       .append('text')
       .attr('text-anchor', 'middle')
-      .attr('font-family', 'sans-serif')
+      .attr('font-family', 'futura')
+      .attr('fill', 'lightslategray')
 
     const arc = d3
       .arc()
-      .innerRadius(100)
-      .outerRadius(200)
+      .innerRadius(80)
+      .outerRadius(150)
 
     const pie = d3
       .pie()
@@ -58,7 +54,7 @@ export class Donut extends React.Component {
       .data(dataInPieFormat)
       .enter()
       .append('path')
-      .attr('fill', (d, i) => colors[i])
+      .attr('fill', 'lightsteelblue')
       .attr('opacity', 0.8)
       .on('mouseover', function(d) {
         d3.select('text').text(`${d.data.name}: ${d.data.value}`)
@@ -88,7 +84,7 @@ export class Donut extends React.Component {
   render() {
     return (
       <section className="page-excl-nav">
-        <h1 className="graph-title"> DONUT</h1>
+        <h1 className="graph-title"> Donut</h1>
         <svg />
       </section>
     )

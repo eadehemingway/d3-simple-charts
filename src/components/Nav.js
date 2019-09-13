@@ -11,6 +11,9 @@ export class Nav extends React.Component {
         <Link className="nav-link" to="/">
           HOME
         </Link>
+        <Link className="nav-link" to="/donut">
+          DONUT
+        </Link>
         <Link className="nav-link" to="/thindonut">
           THIN DONUT
         </Link>
@@ -19,9 +22,6 @@ export class Nav extends React.Component {
         </Link>
         <Link className="nav-link" to="/forcewithlinks">
           FORCE WITH LINKS
-        </Link>
-        <Link className="nav-link" to="/donut">
-          DONUT
         </Link>
         <Link className="nav-link" to="/barchart">
           BARCHART
@@ -36,10 +36,7 @@ export class Nav extends React.Component {
           TREE
         </Link>
         <Link className="nav-link" to="/matrix">
-          DOT MATRIX
-        </Link>
-        <Link className="nav-link" to="/matrix-people">
-          PEOPLE MATRIX
+          MATRIX
         </Link>
         <Link className="nav-link" to="/sankey">
           SANKEY
