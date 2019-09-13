@@ -2,6 +2,8 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class BarChart extends React.Component {
+  chart_width = Math.max(window.innerWidth - 600, 600)
+  chart_height = 400
   state = {
     data: [
       { key: 0, num: 6 },
@@ -19,22 +21,19 @@ export class BarChart extends React.Component {
       { key: 12, num: 10 },
       { key: 13, num: 26 },
       { key: 14, num: 9 }
-    ],
-    chart_width: Math.max(window.innerWidth - 600, 600),
-    chart_height: 400
+    ]
   }
 
   componentDidMount() {
-    const { chart_width, chart_height } = this.state
     d3.select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', this.chart_width)
+      .attr('height', this.chart_height)
 
     this.draw()
   }
 
   draw = () => {
-    const { data, chart_height } = this.state
+    const { data } = this.state
     const x_scale = this.calculateXScale()
     const y_scale = this.calculateYScale()
     const svg = d3.select('svg')
@@ -44,7 +43,7 @@ export class BarChart extends React.Component {
       .enter()
       .append('rect')
       .attr('x', (_, i) => x_scale(i))
-      .attr('y', chart_height)
+      .attr('y', this.chart_height)
       .attr('width', x_scale.bandwidth())
       .attr('height', 0)
       .attr('fill', 'LightSteelBlue ')
@@ -55,7 +54,7 @@ export class BarChart extends React.Component {
       .transition()
       .duration(750)
       .attr('x', (_, i) => x_scale(i))
-      .attr('y', d => chart_height - y_scale(d.num))
+      .attr('y', d => this.chart_height - y_scale(d.num))
       .attr('width', x_scale.bandwidth())
       .attr('height', d => y_scale(d.num))
 
@@ -72,7 +71,7 @@ export class BarChart extends React.Component {
       .append('text')
       .text(d => d.num)
       .attr('x', (_, i) => x_scale(i) + x_scale.bandwidth() / 2)
-      .attr('y', chart_height)
+      .attr('y', this.chart_height)
       .attr('font-size', '14px')
       .attr('fill', '#fff')
       .attr('text-anchor', 'middle')
@@ -83,7 +82,7 @@ export class BarChart extends React.Component {
       .transition()
       .duration(1000)
       .attr('x', (_, i) => x_scale(i) + x_scale.bandwidth() / 2)
-      .attr('y', d => chart_height - y_scale(d.num) + 15)
+      .attr('y', d => this.chart_height - y_scale(d.num) + 15)
 
     labels
       .exit()
@@ -93,20 +92,20 @@ export class BarChart extends React.Component {
   }
 
   calculateXScale = () => {
-    const { data, chart_width } = this.state
+    const { data } = this.state
     return d3
       .scaleBand()
       .domain(d3.range(data.length))
-      .rangeRound([0, chart_width])
+      .rangeRound([0, this.chart_width])
       .paddingInner(0.05)
   }
 
   calculateYScale = () => {
-    const { data, chart_height } = this.state
+    const { data } = this.state
     return d3
       .scaleLinear()
       .domain([0, d3.max(data, d => d.num)])
-      .range([0, chart_height - 100])
+      .range([0, this.chart_height - 100])
   }
 
   addBar = () => {

@@ -5,12 +5,11 @@ import { us_data } from './us' // this is the info we need to draw the map, down
 import { city_data } from './us-cities'
 
 export class MapChart extends React.Component {
+  chart_width = Math.max(window.innerWidth - 600, 800)
+  chart_height = 500
   state = {}
 
   componentDidMount() {
-    const chart_width = Math.max(window.innerWidth - 600, 800)
-    const chart_height = 500
-
     const colorScale = d3
       .scaleQuantize() // scales the numbers because the colours can be considered catagorical... allows each colour to represent lots of values
       .domain([
@@ -31,15 +30,15 @@ export class MapChart extends React.Component {
 
     const projection = d3
       .geoAlbersUsa()
-      .scale([chart_width]) // why is the chart width the scale?
-      .translate([chart_width / 2, chart_height / 2])
+      .scale([this.chart_width]) // why is the chart width the scale?
+      .translate([this.chart_width / 2, this.chart_height / 2])
 
     const path = d3.geoPath(projection)
 
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', this.chart_width)
+      .attr('height', this.chart_height)
 
     us_data.features.forEach((us_e, us_i) => {
       // the features refers to each state

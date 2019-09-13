@@ -2,6 +2,8 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class LineChart extends React.Component {
+  chart_width = Math.max(window.innerWidth - 600, 500)
+  chart_height = 500
   state = {
     data: [
       {
@@ -40,14 +42,11 @@ export class LineChart extends React.Component {
           { rating: 6, date_entered: '2018-04-30' }
         ]
       }
-    ],
-
-    chart_width: Math.max(window.innerWidth - 600, 500),
-    chart_height: 500
+    ]
   }
 
   componentDidMount() {
-    const { data, chart_height, chart_width } = this.state
+    const { data } = this.state
     const timeParsedData = data.map(d => {
       const lineData = d.lineData.map(l => ({
         ...l,
@@ -67,24 +66,27 @@ export class LineChart extends React.Component {
         d3.timeParse('%Y-%m-%d')('2018-02-12'),
         d3.timeParse('%Y-%m-%d')('2018-04-30')
       ])
-      .range([leftPadding, chart_width - leftPadding])
+      .range([leftPadding, this.chart_width - leftPadding])
 
     const y_scale = d3
       .scaleLinear()
       .domain([0, 10])
-      .range([chart_height - bottomPadding, bottomPadding])
+      .range([this.chart_height - bottomPadding, bottomPadding])
 
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', this.chart_width)
+      .attr('height', this.chart_height)
 
     const x_axis = d3.axisBottom(x_scale).tickFormat(d3.timeFormat('%y-%m-%d'))
 
     svg
       .append('g')
       .attr('class', 'axis')
-      .attr('transform', 'translate(0,' + (chart_height - bottomPadding) + ')')
+      .attr(
+        'transform',
+        'translate(0,' + (this.chart_height - bottomPadding) + ')'
+      )
       .call(x_axis)
       .selectAll('text')
       .style('text-anchor', 'end')
@@ -103,7 +105,7 @@ export class LineChart extends React.Component {
 
     const colorsFactPalette = d3.scaleOrdinal(d3.schemeSet3)
 
-    const totalLength = chart_width * 3
+    const totalLength = this.chart_width * 3
 
     const lineFunc = d3
       .line()
@@ -135,7 +137,8 @@ export class LineChart extends React.Component {
       .append('g')
       .attr(
         'transform',
-        (d, i) => 'translate(' + (chart_width - 100) + ',' + (i * 15 + 50) + ')'
+        (d, i) =>
+          'translate(' + (this.chart_width - 100) + ',' + (i * 15 + 50) + ')'
       )
       .attr('class', '.legend')
       .style('opacity', 1)
