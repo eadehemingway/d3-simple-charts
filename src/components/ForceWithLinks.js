@@ -132,8 +132,7 @@ export class ForceWithLinks extends React.Component {
   }
 
   componentDidMount() {
-    const svgWidth = Math.max(window.innerWidth - 600, 500)
-
+    const svgWidth = 500
     const svgHeight = 500
     const { data } = this.state
 
@@ -172,16 +171,17 @@ export class ForceWithLinks extends React.Component {
       .append('line')
       .attr('stroke', '#ccc')
 
+    const radius = 13
+
     const node = svg
       .selectAll('circle')
       .data(data.nodes)
       .enter()
       .append('circle')
-      .attr('r', 13)
+      .attr('r', radius)
       .attr('fill', d =>
         d.group == 1 ? '#aaa' : d.group == 2 ? '#fbc280' : '#405275'
       )
-      // is the call method just a way of applying a function to the current selection?
       .call(
         d3
           .drag()

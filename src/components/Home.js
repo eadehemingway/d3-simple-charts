@@ -5,29 +5,29 @@ export class Home extends React.Component {
   state = { data: [] }
 
   componentDidMount() {
-    const fiveThousand = d3.range(1000).map((n, i) => ({ id: i, num: n }))
+    const data = d3.range(1000).map((n, i) => ({ id: i, num: n }))
     d3.select('svg')
       .attr('width', 800)
       .attr('height', 600)
 
-    this.setState({ data: fiveThousand })
-
-    setTimeout(() => this.redraw(), 50) // adding a timeout so that the page loads with something while waiting for the d3
+    this.setState({ data }, () => this.redraw())
   }
 
   redraw = () => {
     const { data } = this.state
+    const centerOfGravity = { x: 350, y: 350 }
     const forceX = d3
       .forceX()
-      .x(350)
+      .x(centerOfGravity.x)
       .strength(0.5)
 
     const forceY = d3
       .forceY()
-      .y(350)
+      .y(centerOfGravity.y)
       .strength(0.5)
+    const radius = 4
 
-    const collision = d3.forceCollide(12).strength(0.1)
+    const collision = d3.forceCollide(radius * 3).strength(0.1)
 
     d3.forceSimulation(data)
       .force('collision', collision)
@@ -35,7 +35,6 @@ export class Home extends React.Component {
       .force('y', forceY)
       .alpha(0.01) // small alpha to have the elements move at a slower pace
       .alphaDecay(0)
-      // .tick(800) // this makes it appear in the middle immediately ...
       .on('tick', () => {
         // call the tick function running the simulation
         d3.selectAll('.bubble').attr(
@@ -51,23 +50,24 @@ export class Home extends React.Component {
       .data(data)
       .enter()
       .append('circle')
-      .attr('r', 4)
+      .attr('r', radius)
       .attr('class', 'bubble')
       .attr('fill', 'coral')
       .attr('opacity', '0')
 
     d3.selectAll('.bubble')
       .transition()
+      .duration(1500)
       .attr('opacity', '0.6')
 
     svg
       .append('text')
       .text('HOME')
-      .attr('x', 350)
-      .attr('y', 350)
+      .attr('x', centerOfGravity.x)
+      .attr('y', centerOfGravity.y)
       .attr('font-size', '70px')
       .attr('font-weight', 'bold')
-      .attr('font-family', 'sans-serif')
+      .attr('font-family', 'futura')
       .attr('fill', 'snow')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')

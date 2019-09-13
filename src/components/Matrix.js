@@ -1630,14 +1630,14 @@ export class Matrix extends React.Component {
   }
   getY2Coordinate = (index, dotsPerRow, radius) => {
     const placeInCol = Math.floor(index / dotsPerRow)
-    const circlePadding = 5
-    return placeInCol * (circlePadding + radius * 2)
+    const padding = 5
+    return placeInCol * (padding + radius * 2)
   }
 
   getX2Coordinate = (index, dotsPerRow, radius) => {
     const placeInRow = index % dotsPerRow
-    const circlePadding = 5
-    return placeInRow * (radius * 2 + circlePadding)
+    const padding = 5
+    return placeInRow * (radius * 2 + padding)
   }
 
   campusXCoordinate = campus => {
@@ -1674,7 +1674,7 @@ export class Matrix extends React.Component {
       return acc
     }, [])
 
-    const svgWidth = Math.max(window.innerWidth - 600, 700)
+    const svgWidth = 700
     const svgHeight = 500
     const svg = d3
       .select('svg')

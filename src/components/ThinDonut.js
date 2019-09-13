@@ -13,7 +13,7 @@ export class ThinDonut extends React.Component {
       1500
     )
 
-    const svgWidth = Math.max(window.innerWidth - 600, 500)
+    const svgWidth = 500
     const svgHeight = 500
     const svg = d3
       .select('svg')
@@ -42,12 +42,13 @@ export class ThinDonut extends React.Component {
       .arc()
       .outerRadius(200)
       .innerRadius(180)
+
     const pie = d3
       .pie()
       .value(d => d)
       .sort(null)
-    const donutContainer = d3.select('.donutContainer')
 
+    const donutContainer = d3.select('.donutContainer')
     const arcSelection = donutContainer.selectAll('path').data(pie(data))
 
     const enterSelection = donutContainer

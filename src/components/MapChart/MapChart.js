@@ -5,9 +5,8 @@ import { us_data } from './us' // this is the info we need to draw the map, down
 import { city_data } from './us-cities'
 
 export class MapChart extends React.Component {
-  svgWidth = Math.max(window.innerWidth - 600, 800)
+  svgWidth = 800
   svgHeight = 500
-  state = {}
 
   componentDidMount() {
     const colorScale = d3
@@ -91,7 +90,7 @@ export class MapChart extends React.Component {
     cityGroups
       .append('text')
       .text(d => d.city)
-      .attr('font-family', 'sans-serif')
+      .attr('font-family', 'futura')
       .attr('font-size', 8)
       .attr('stroke', 'white')
       .attr('stroke-width', '0.5')

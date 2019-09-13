@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class Force extends React.Component {
-  svgWidth = Math.max(window.innerWidth - 600, 500)
+  svgWidth = 500
   svgHeight = 500
   state = {
     data: [
@@ -47,7 +47,7 @@ export class Force extends React.Component {
     this.createSimulation()
   }
 
-  // works out the coordinates of the groups, and adds 'group' which can be read later to use for the labels of each group
+  // works out the coordinates of the groups, and adds 'group' property which can be read later to use for the labels of each group
   centerOfGravityForGroups = categories => {
     const firstCenter = this.svgWidth / 4
     const secondCenter = firstCenter * 3
@@ -81,8 +81,8 @@ export class Force extends React.Component {
       .forceY()
       .y(d => this.centerOfGravityForDatum(d).y)
       .strength(1)
-
-    const collision = d3.forceCollide().radius(13)
+    const radius = 13
+    const collision = d3.forceCollide().radius(radius)
 
     d3.forceSimulation(data)
       .force('collision', collision)

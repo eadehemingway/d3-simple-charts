@@ -1,6 +1,5 @@
 import React from 'react'
 import * as d3 from 'd3'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 
 export class TreeChart extends React.Component {
   state = {
@@ -44,12 +43,12 @@ export class TreeChart extends React.Component {
     const treemap = d3.tree().size([500, 500])
     const nodes = treemap(d3.hierarchy(data, d => d.children))
 
-    const svgWidth = Math.max(window.innerWidth - 600, 700)
-    const svgWidth = 500
+    const svgWidth = 700
+    const svgHeight = 500
     const svg = d3
       .select('svg')
       .attr('width', svgWidth)
-      .attr('height', svgWidth)
+      .attr('height', svgHeight)
     const link = svg
       .selectAll('.link')
       .data(nodes.descendants().slice(1)) // this cuts off the first node cos that doesnt have links going to it

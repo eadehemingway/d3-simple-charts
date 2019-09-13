@@ -11,14 +11,13 @@ export class Donut extends React.Component {
       { name: 'Latvia', value: 14 },
       { name: 'Turkey', value: 16 },
       { name: 'Spain', value: 20 }
-    ],
-    padAngle: 0
+    ]
   }
 
   componentDidMount() {
     const { data } = this.state
 
-    const svgWidth = Math.max(window.innerWidth - 600, 500)
+    const svgWidth = 500
     const svgHeight = 500
 
     const svg = d3
@@ -26,10 +25,14 @@ export class Donut extends React.Component {
       .attr('class', 'pie')
       .attr('width', svgWidth)
       .attr('height', svgHeight)
-
+    const outerRadius = 150
+    const innerRadius = 80
     const donutGroup = svg
       .append('g')
-      .attr('transform', 'translate(' + 300 + ',' + svgHeight / 2 + ')')
+      .attr(
+        'transform',
+        'translate(' + outerRadius * 2 + ',' + svgHeight / 2 + ')'
+      )
 
     donutGroup
       .append('text')
@@ -39,8 +42,8 @@ export class Donut extends React.Component {
 
     const arc = d3
       .arc()
-      .innerRadius(80)
-      .outerRadius(150)
+      .innerRadius(innerRadius)
+      .outerRadius(outerRadius)
 
     const pie = d3
       .pie()

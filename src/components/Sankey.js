@@ -26,13 +26,13 @@ export class Sankey extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const svgWidth = Math.max(window.innerWidth - 600, 500)
+    const svgWidth = 500
     const svgHeight = 800
     const san = sankey()
       .size([svgWidth, 300])
       .nodeId(d => d.id)
       .nodeWidth(20)
-      .nodePadding(10)
+      .nodePadding(20)
 
     let graph = san(data)
     const svg = d3
@@ -74,8 +74,8 @@ export class Sankey extends React.Component {
       .call(d3.drag().on('drag', dragmove))
 
     function dragmove(d) {
-      const rectY = d3.select(this).attr('y')
       d.y0 = d.y0 + d3.event.dy
+      const rectY = d3.select(this).attr('y')
       const yTranslate = d.y0 - rectY
       d3.select(this).attr(
         'transform',

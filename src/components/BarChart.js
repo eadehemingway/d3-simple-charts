@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class BarChart extends React.Component {
-  svgWidth = Math.max(window.innerWidth - 600, 600)
+  svgWidth = 600
   svgHeight = 400
   state = {
     data: [

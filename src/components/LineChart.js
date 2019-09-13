@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class LineChart extends React.Component {
-  svgWidth = Math.max(window.innerWidth - 600, 500)
+  svgWidth = 500
   svgHeight = 500
   state = {
     data: [
@@ -113,7 +113,7 @@ export class LineChart extends React.Component {
       .y(d => y_scale(d.rating))
 
     svg
-      .selectAll('.factors')
+      .selectAll('.lines')
       .data(timeParsedData)
       .enter()
       .append('g')
@@ -161,7 +161,7 @@ export class LineChart extends React.Component {
       .append('text')
       .text('test label')
       .attr('transform', 'translate(20,10)')
-      .style('font-family', 'sans-serif')
+      .style('font-family', 'futura')
       .attr('fill', 'steelblue')
 
     legendItem
