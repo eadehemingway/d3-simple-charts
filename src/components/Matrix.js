@@ -1674,12 +1674,12 @@ export class Matrix extends React.Component {
       return acc
     }, [])
 
-    const chart_width = Math.max(window.innerWidth - 600, 700)
-    const chart_height = 500
+    const svgWidth = Math.max(window.innerWidth - 600, 700)
+    const svgHeight = 500
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
 
   svg
       .selectAll('text')

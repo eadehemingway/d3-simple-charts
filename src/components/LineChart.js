@@ -2,8 +2,8 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class LineChart extends React.Component {
-  chart_width = Math.max(window.innerWidth - 600, 500)
-  chart_height = 500
+  svgWidth = Math.max(window.innerWidth - 600, 500)
+  svgHeight = 500
   state = {
     data: [
       {
@@ -66,17 +66,17 @@ export class LineChart extends React.Component {
         d3.timeParse('%Y-%m-%d')('2018-02-12'),
         d3.timeParse('%Y-%m-%d')('2018-04-30')
       ])
-      .range([leftPadding, this.chart_width - leftPadding])
+      .range([leftPadding, this.svgWidth - leftPadding])
 
     const y_scale = d3
       .scaleLinear()
       .domain([0, 10])
-      .range([this.chart_height - bottomPadding, bottomPadding])
+      .range([this.svgHeight - bottomPadding, bottomPadding])
 
     const svg = d3
       .select('svg')
-      .attr('width', this.chart_width)
-      .attr('height', this.chart_height)
+      .attr('width', this.svgWidth)
+      .attr('height', this.svgHeight)
 
     const x_axis = d3.axisBottom(x_scale).tickFormat(d3.timeFormat('%y-%m-%d'))
 
@@ -85,7 +85,7 @@ export class LineChart extends React.Component {
       .attr('class', 'axis')
       .attr(
         'transform',
-        'translate(0,' + (this.chart_height - bottomPadding) + ')'
+        'translate(0,' + (this.svgHeight - bottomPadding) + ')'
       )
       .call(x_axis)
       .selectAll('text')
@@ -105,7 +105,7 @@ export class LineChart extends React.Component {
 
     const colorsFactPalette = d3.scaleOrdinal(d3.schemeSet3)
 
-    const totalLength = this.chart_width * 3
+    const totalLength = this.svgWidth * 3
 
     const lineFunc = d3
       .line()
@@ -138,7 +138,7 @@ export class LineChart extends React.Component {
       .attr(
         'transform',
         (d, i) =>
-          'translate(' + (this.chart_width - 100) + ',' + (i * 15 + 50) + ')'
+          'translate(' + (this.svgWidth - 100) + ',' + (i * 15 + 50) + ')'
       )
       .attr('class', '.legend')
       .style('opacity', 1)

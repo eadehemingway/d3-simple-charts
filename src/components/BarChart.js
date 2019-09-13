@@ -2,8 +2,8 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class BarChart extends React.Component {
-  chart_width = Math.max(window.innerWidth - 600, 600)
-  chart_height = 400
+  svgWidth = Math.max(window.innerWidth - 600, 600)
+  svgHeight = 400
   state = {
     data: [
       { key: 0, num: 6 },
@@ -26,8 +26,8 @@ export class BarChart extends React.Component {
 
   componentDidMount() {
     d3.select('svg')
-      .attr('width', this.chart_width)
-      .attr('height', this.chart_height)
+      .attr('width', this.svgWidth)
+      .attr('height', this.svgHeight)
 
     this.draw()
   }
@@ -43,7 +43,7 @@ export class BarChart extends React.Component {
       .enter()
       .append('rect')
       .attr('x', (_, i) => x_scale(i))
-      .attr('y', this.chart_height)
+      .attr('y', this.svgHeight)
       .attr('width', x_scale.bandwidth())
       .attr('height', 0)
       .attr('fill', 'LightSteelBlue ')
@@ -54,7 +54,7 @@ export class BarChart extends React.Component {
       .transition()
       .duration(750)
       .attr('x', (_, i) => x_scale(i))
-      .attr('y', d => this.chart_height - y_scale(d.num))
+      .attr('y', d => this.svgHeight - y_scale(d.num))
       .attr('width', x_scale.bandwidth())
       .attr('height', d => y_scale(d.num))
 
@@ -71,7 +71,7 @@ export class BarChart extends React.Component {
       .append('text')
       .text(d => d.num)
       .attr('x', (_, i) => x_scale(i) + x_scale.bandwidth() / 2)
-      .attr('y', this.chart_height)
+      .attr('y', this.svgHeight)
       .attr('font-size', '14px')
       .attr('fill', '#fff')
       .attr('text-anchor', 'middle')
@@ -82,7 +82,7 @@ export class BarChart extends React.Component {
       .transition()
       .duration(1000)
       .attr('x', (_, i) => x_scale(i) + x_scale.bandwidth() / 2)
-      .attr('y', d => this.chart_height - y_scale(d.num) + 15)
+      .attr('y', d => this.svgHeight - y_scale(d.num) + 15)
 
     labels
       .exit()
@@ -96,7 +96,7 @@ export class BarChart extends React.Component {
     return d3
       .scaleBand()
       .domain(d3.range(data.length))
-      .rangeRound([0, this.chart_width])
+      .rangeRound([0, this.svgWidth])
       .paddingInner(0.05)
   }
 
@@ -105,7 +105,7 @@ export class BarChart extends React.Component {
     return d3
       .scaleLinear()
       .domain([0, d3.max(data, d => d.num)])
-      .range([0, this.chart_height - 100])
+      .range([0, this.svgHeight - 100])
   }
 
   addBar = () => {

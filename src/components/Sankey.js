@@ -26,10 +26,10 @@ export class Sankey extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const chart_width = Math.max(window.innerWidth - 600, 500)
-    const chart_height = 800
+    const svgWidth = Math.max(window.innerWidth - 600, 500)
+    const svgHeight = 800
     const san = sankey()
-      .size([chart_width, 300])
+      .size([svgWidth, 300])
       .nodeId(d => d.id)
       .nodeWidth(20)
       .nodePadding(10)
@@ -37,8 +37,8 @@ export class Sankey extends React.Component {
     let graph = san(data)
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
 
     const link = svg
       .append('g')

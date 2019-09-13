@@ -13,18 +13,18 @@ export class ThinDonut extends React.Component {
       1500
     )
 
-    const chart_width = Math.max(window.innerWidth - 600, 500)
-    const chart_height = 500
+    const svgWidth = Math.max(window.innerWidth - 600, 500)
+    const svgHeight = 500
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
 
     svg
       .append('g')
       .attr(
         'transform',
-        'translate(' + chart_width / 2 + ',' + chart_height / 2 + ')'
+        'translate(' + svgWidth / 2 + ',' + svgHeight / 2 + ')'
       )
       .attr('class', 'donutContainer')
 

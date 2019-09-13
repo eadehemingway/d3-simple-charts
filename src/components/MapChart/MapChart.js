@@ -5,8 +5,8 @@ import { us_data } from './us' // this is the info we need to draw the map, down
 import { city_data } from './us-cities'
 
 export class MapChart extends React.Component {
-  chart_width = Math.max(window.innerWidth - 600, 800)
-  chart_height = 500
+  svgWidth = Math.max(window.innerWidth - 600, 800)
+  svgHeight = 500
   state = {}
 
   componentDidMount() {
@@ -30,15 +30,15 @@ export class MapChart extends React.Component {
 
     const projection = d3
       .geoAlbersUsa()
-      .scale([this.chart_width]) // why is the chart width the scale?
-      .translate([this.chart_width / 2, this.chart_height / 2])
+      .scale([this.svgWidth]) // why is the chart width the scale?
+      .translate([this.svgWidth / 2, this.svgHeight / 2])
 
     const path = d3.geoPath(projection)
 
     const svg = d3
       .select('svg')
-      .attr('width', this.chart_width)
-      .attr('height', this.chart_height)
+      .attr('width', this.svgWidth)
+      .attr('height', this.svgHeight)
 
     us_data.features.forEach((us_e, us_i) => {
       // the features refers to each state

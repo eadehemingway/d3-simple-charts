@@ -2,8 +2,8 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class Force extends React.Component {
-  chart_width = Math.max(window.innerWidth - 600, 500)
-  chart_height = 500
+  svgWidth = Math.max(window.innerWidth - 600, 500)
+  svgHeight = 500
   state = {
     data: [
       { id: 2, campus: 'khaleel', gender: 'female', role: 'student' },
@@ -31,8 +31,8 @@ export class Force extends React.Component {
     const { data } = this.state
     const svg = d3
       .select('svg')
-      .attr('width', this.chart_width)
-      .attr('height', this.chart_height)
+      .attr('width', this.svgWidth)
+      .attr('height', this.svgHeight)
 
     svg
       .selectAll('circle')
@@ -49,9 +49,9 @@ export class Force extends React.Component {
 
   // works out the coordinates of the groups, and adds 'group' which can be read later to use for the labels of each group
   centerOfGravityForGroups = categories => {
-    const firstCenter = this.chart_width / 4
+    const firstCenter = this.svgWidth / 4
     const secondCenter = firstCenter * 3
-    const yVal = this.chart_height / 2
+    const yVal = this.svgHeight / 2
     const [groupOne, groupTwo] = categories
     return [
       { x: firstCenter, y: yVal, group: groupOne },

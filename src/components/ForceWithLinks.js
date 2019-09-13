@@ -132,15 +132,15 @@ export class ForceWithLinks extends React.Component {
   }
 
   componentDidMount() {
-    const chart_width = Math.max(window.innerWidth - 600, 500)
+    const svgWidth = Math.max(window.innerWidth - 600, 500)
 
-    const chart_height = 500
+    const svgHeight = 500
     const { data } = this.state
 
     const svg = d3
       .select('svg')
-      .attr('width', chart_width)
-      .attr('height', chart_height)
+      .attr('width', svgWidth)
+      .attr('height', svgHeight)
 
     // this creates the force that we will use
     const force = d3
@@ -157,7 +157,7 @@ export class ForceWithLinks extends React.Component {
       // this tells the links which bit of data to look for in the nodes to identify which to connect to
       .force('link', d3.forceLink().id(d => d.index))
       // this says make the force be pulled towards the center
-      .force('center', d3.forceCenter(chart_width / 2, chart_height / 2))
+      .force('center', d3.forceCenter(svgWidth / 2, svgHeight / 2))
 
     //this passes the data to the force we have created
     force
