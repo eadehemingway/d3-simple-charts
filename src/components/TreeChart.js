@@ -44,7 +44,7 @@ export class TreeChart extends React.Component {
     const treemap = d3.tree().size([500, 500])
     const nodes = treemap(d3.hierarchy(data, d => d.children))
 
-    const width = Math.max(window.innerWidth - 600, 500)
+    const width = Math.max(window.innerWidth - 600, 700)
     const height = 500
     const svg = d3
       .select('svg')

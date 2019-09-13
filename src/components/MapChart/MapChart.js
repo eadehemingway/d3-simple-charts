@@ -8,7 +8,7 @@ export class MapChart extends React.Component {
   state = {}
 
   componentDidMount() {
-    const chart_width = Math.max(window.innerWidth - 600, 500)
+    const chart_width = Math.max(window.innerWidth - 600, 800)
     const chart_height = 500
 
     const colorScale = d3
@@ -52,7 +52,7 @@ export class MapChart extends React.Component {
       })
     })
     const leftOffset = 100
-    const topOffset = 50
+    const topOffset = 20
     svg
       .selectAll('path')
       .data(us_data.features)
@@ -65,7 +65,7 @@ export class MapChart extends React.Component {
       })
       .attr('stroke', 'red')
       .attr('stroke-width', 1)
-      .attr('transform', d => `translate(${-leftOffset}, ${-topOffset})`)
+      .attr('transform', d => `translate(${-leftOffset}, ${topOffset})`)
 
     const cityGroups = svg
       .selectAll('.cityGroups')
@@ -77,7 +77,7 @@ export class MapChart extends React.Component {
         'transform',
         d =>
           `translate(${projection([d.lon, d.lat])[0] -
-            leftOffset}, ${projection([d.lon, d.lat])[1] - topOffset})`
+            leftOffset}, ${projection([d.lon, d.lat])[1] + topOffset})`
       )
 
     cityGroups

@@ -20,8 +20,8 @@ export class BarChart extends React.Component {
       { key: 13, num: 26 },
       { key: 14, num: 9 }
     ],
-    chart_width: Math.max(window.innerWidth - 600, 500),
-    chart_height: 500
+    chart_width: Math.max(window.innerWidth - 600, 600),
+    chart_height: 400
   }
 
   componentDidMount() {
@@ -106,7 +106,7 @@ export class BarChart extends React.Component {
     return d3
       .scaleLinear()
       .domain([0, d3.max(data, d => d.num)])
-      .range([0, chart_height])
+      .range([0, chart_height - 100])
   }
 
   addBar = () => {

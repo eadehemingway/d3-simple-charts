@@ -26,14 +26,14 @@ export class Sankey extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
+    const width = Math.max(window.innerWidth - 600, 500)
+    const height = 800
     const san = sankey()
-      .size([500, 300])
+      .size([width, 300])
       .nodeId(d => d.id)
       .nodeWidth(20)
       .nodePadding(10)
 
-    const width = Math.max(window.innerWidth - 600, 500)
-    const height = 500
     let graph = san(data)
     const svg = d3
       .select('svg')
@@ -50,12 +50,12 @@ export class Sankey extends React.Component {
       .attr('class', 'link')
       .attr('d', sankeyLinkHorizontal())
       .attr('fill', 'none')
-      .attr('stroke', 'lightsteelblue')
+      .attr('stroke', 'coral')
       .attr('stroke-width', d => d.width)
       .attr('opacity', 0.3)
       .attr('transform', d => 'translate(0,100)')
 
-    const node = svg
+    svg
       .append('g')
       .classed('nodes', true)
       .selectAll('rect')
@@ -67,7 +67,8 @@ export class Sankey extends React.Component {
       .attr('y', d => d.y0)
       .attr('width', d => d.x1 - d.x0)
       .attr('height', d => d.y1 - d.y0)
-      .attr('fill', 'steelblue')
+      .attr('fill', 'white')
+      .attr('stroke', 'coral')
       .attr('opacity', 0.8)
       .attr('transform', d => 'translate(0,100)')
       .call(d3.drag().on('drag', dragmove))

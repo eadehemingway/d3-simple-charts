@@ -40,13 +40,18 @@ body {
   width: 158px;
   height: 20px;
   background: snow;
-  color: lightslategray;
-  border: 1px solid lightslategray;
+  color: coral;
+  border: 1px solid coral;
   margin-bottom: 3rem;
+  outline: none;
 }
 
 .link:hover {
-  opacity: 1 !important;
+  opacity: 0.6 !important;
+}
+
+.node:hover {
+  cursor: pointer;
 }
 
 .home-page {
@@ -71,6 +76,7 @@ body {
   width: 200px;
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .axis line {

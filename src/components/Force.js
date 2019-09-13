@@ -113,9 +113,7 @@ export class Force extends React.Component {
     const entering = labelSelection
       .enter()
       .append('text')
-      .attr('fill', 'red')
       .style('font-size', '20')
-      .style('text-transform', 'uppercase')
       .style('letter-spacing', '0.1rem')
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
@@ -125,8 +123,9 @@ export class Force extends React.Component {
     updatedAndEnter
       .text(d => d.group)
       .attr('x', d => d.x)
-      .attr('opacity', '0.2')
-      .attr('font-family', 'sans-serif')
+      .attr('opacity', '0.4')
+      .attr('font-family', 'futura')
+      .attr('fill', 'lightslategray')
       .attr('y', 100)
   }
 
