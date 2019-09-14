@@ -33,7 +33,7 @@ body {
 .page-excl-nav {
   padding: 4rem;
   position: fixed;
-  left: 300px;
+  left: 240px;
 }
 
 .force-select {
@@ -59,8 +59,7 @@ body {
   left: 240px;
   top: 0;
 }
-.splash-page,
-h1 {
+.splash-page h1 {
   position: relative;
   left: 30px;
   top: 20px;

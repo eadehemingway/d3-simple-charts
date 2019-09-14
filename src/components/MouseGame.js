@@ -27,7 +27,7 @@ export class MouseGame extends React.Component {
     const { data } = this.state
     const newData = [
       ...data,
-      { id: e.timeStamp, x: e.clientX - 270, y: e.clientY - 85 }
+      { id: e.timeStamp, x: e.clientX - 240, y: e.clientY - 75 }
     ]
     this.setState({ data: newData })
   }
