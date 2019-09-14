@@ -86,7 +86,7 @@ export class Home extends React.Component {
 
   render() {
     return (
-      <section className="home-page">
+      <section className="splash-page">
         <svg></svg>
       </section>
     )

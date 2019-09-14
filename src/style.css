@@ -54,10 +54,16 @@ body {
   cursor: pointer;
 }
 
-.home-page {
+.splash-page {
   position: fixed;
   left: 240px;
   top: 0;
+}
+.splash-page,
+h1 {
+  position: relative;
+  left: 30px;
+  top: 20px;
 }
 
 .btn {

@@ -8,8 +8,8 @@ export class MouseGame extends React.Component {
 
   componentDidMount() {
     d3.select('svg')
-      .attr('width', 500)
-      .attr('height', 500)
+      .attr('width', 700)
+      .attr('height', 700)
 
     setInterval(() => {
       const { data } = this.state
@@ -27,7 +27,7 @@ export class MouseGame extends React.Component {
     const { data } = this.state
     const newData = [
       ...data,
-      { id: e.timeStamp, x: e.clientX - 350, y: e.clientY - 150 }
+      { id: e.timeStamp, x: e.clientX - 270, y: e.clientY - 85 }
     ]
     this.setState({ data: newData })
   }
@@ -57,7 +57,7 @@ export class MouseGame extends React.Component {
   }
   render() {
     return (
-      <section className="page-excl-nav">
+      <section className="splash-page">
         <h1 className="graph-title"> Mouse dot game</h1>
         <svg onMouseMove={this.addNode}></svg>
       </section>
