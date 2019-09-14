@@ -41,6 +41,9 @@ export class Nav extends React.Component {
         <Link className="nav-link" to="/sankey">
           SANKEY
         </Link>
+        <Link className="nav-link" to="/mousegame">
+          MOUSE GAME
+        </Link>
       </div>
     )
   }

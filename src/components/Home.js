@@ -5,7 +5,7 @@ export class Home extends React.Component {
   state = { data: [] }
 
   componentDidMount() {
-    const data = d3.range(1000).map((n, i) => ({ id: i, num: n }))
+    const data = d3.range(1000).map((n, i) => ({ id: i, num: n, radius: 4 }))
     d3.select('svg')
       .attr('width', 800)
       .attr('height', 600)
@@ -29,7 +29,8 @@ export class Home extends React.Component {
 
     const collision = d3.forceCollide(radius * 3).strength(0.1)
 
-    d3.forceSimulation(data)
+    const force = d3
+      .forceSimulation(data)
       .force('collision', collision)
       .force('x', forceX)
       .force('y', forceY)
@@ -54,6 +55,16 @@ export class Home extends React.Component {
       .attr('class', 'bubble')
       .attr('fill', 'coral')
       .attr('opacity', '0')
+    // .on('mouseover', function() {
+    //   d3.select(this)
+    //     .attr('r', '100px')
+    //     .attr('fill', 'snow')
+    // })
+    // .on('mouseout', function(d) {
+    //   d3.select(this)
+    //     .attr('r', '0')
+    //     .attr('fill', 'coral')
+    // })
 
     d3.selectAll('.bubble')
       .transition()

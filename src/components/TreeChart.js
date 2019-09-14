@@ -40,15 +40,16 @@ export class TreeChart extends React.Component {
   componentDidMount() {
     const { data } = this.state
     const padding = 11
-    const treemap = d3.tree().size([500, 500])
-    const nodes = treemap(d3.hierarchy(data, d => d.children))
-
     const svgWidth = 700
     const svgHeight = 500
+    const treemap = d3.tree().size([500, svgHeight])
+    const nodes = treemap(d3.hierarchy(data, d => d.children))
+
     const svg = d3
       .select('svg')
       .attr('width', svgWidth)
       .attr('height', svgHeight)
+
     const link = svg
       .selectAll('.link')
       .data(nodes.descendants().slice(1)) // this cuts off the first node cos that doesnt have links going to it

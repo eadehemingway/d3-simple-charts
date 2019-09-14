@@ -4,13 +4,13 @@ import * as d3 from 'd3'
 export class Donut extends React.Component {
   state = {
     data: [
-      { name: 'USA', value: 40 },
-      { name: 'UK', value: 20 },
-      { name: 'France', value: 30 },
-      { name: 'Hungry', value: 10 },
-      { name: 'Latvia', value: 14 },
-      { name: 'Turkey', value: 16 },
-      { name: 'Spain', value: 20 }
+      { name: 'Asia: 59.69%', value: 4581757408 },
+      { name: 'Africa: 16.36%', value: 1216130000 },
+      { name: 'Europe: 9.94%', value: 738849000 },
+      { name: 'North Am: 7.79%', value: 579024000 },
+      { name: 'South Am: 5.68%', value: 422535000 },
+      { name: 'Oceania: 0.54%', value: 38304000 },
+      { name: 'Antarctica: 0%', value: 0 }
     ]
   }
 
@@ -36,6 +36,7 @@ export class Donut extends React.Component {
 
     donutGroup
       .append('text')
+      .text('continent pop')
       .attr('text-anchor', 'middle')
       .attr('font-family', 'futura')
       .attr('fill', 'lightslategray')
@@ -60,13 +61,13 @@ export class Donut extends React.Component {
       .attr('fill', 'lightsteelblue')
       .attr('opacity', 0.8)
       .on('mouseover', function(d) {
-        d3.select('text').text(`${d.data.name}: ${d.data.value}`)
+        d3.select('text').text(`${d.data.name}`)
         d3.select(this)
           .style('cursor', 'pointer')
           .style('opacity', '0.5')
       })
       .on('mouseout', function(d) {
-        d3.select('text').text(``)
+        d3.select('text').text(`continent pop`)
         d3.select(this)
           .style('cursor', 'none')
           .style('opacity', '1')
