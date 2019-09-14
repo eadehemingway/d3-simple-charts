@@ -45,7 +45,7 @@ export class MouseGame extends React.Component {
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
       .attr('r', 3)
-      .attr('fill', 'red')
+      .attr('fill', 'coral')
       .attr('opacity', 1)
 
     circles

@@ -29,8 +29,7 @@ export class Home extends React.Component {
 
     const collision = d3.forceCollide(radius * 3).strength(0.1)
 
-    const force = d3
-      .forceSimulation(data)
+    d3.forceSimulation(data)
       .force('collision', collision)
       .force('x', forceX)
       .force('y', forceY)
