@@ -13,7 +13,7 @@ export class ThinDonut extends React.Component {
       1500
     )
 
-    const svgWidth = 500
+    const svgWidth = 700
     const svgHeight = 500
     const svg = d3
       .select('svg')

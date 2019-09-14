@@ -26,7 +26,7 @@ export class Sankey extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const svgWidth = 500
+    const svgWidth = 700
     const svgHeight = 800
     const san = sankey()
       .size([svgWidth, 300])

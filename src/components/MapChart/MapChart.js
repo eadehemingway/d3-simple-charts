@@ -49,7 +49,7 @@ export class MapChart extends React.Component {
         us_data.features[us_i].properties.num = parseFloat(z_e.num)
       })
     })
-    const leftOffset = 100
+    const leftOffset = 0
     const topOffset = 20
     svg
       .selectAll('path')

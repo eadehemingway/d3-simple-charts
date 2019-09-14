@@ -132,8 +132,8 @@ export class ForceWithLinks extends React.Component {
   }
 
   componentDidMount() {
-    const svgWidth = 500
-    const svgHeight = 500
+    const svgWidth = 700
+    const svgHeight = 600
     const { data } = this.state
 
     const svg = d3

@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class Force extends React.Component {
-  svgWidth = 500
+  svgWidth = 700
   svgHeight = 500
   state = {
     data: [

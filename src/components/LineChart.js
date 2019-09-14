@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 
 export class LineChart extends React.Component {
-  svgWidth = 500
+  svgWidth = 700
   svgHeight = 500
   state = {
     data: [
@@ -58,7 +58,7 @@ export class LineChart extends React.Component {
       }
     })
 
-    const leftPadding = 20
+    const leftPadding = 70
     const bottomPadding = 70
     const x_scale = d3
       .scaleTime()
