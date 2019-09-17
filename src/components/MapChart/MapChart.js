@@ -1,7 +1,7 @@
 import React from 'react'
 import * as d3 from 'd3'
 import { zombie_data } from './zombie-attacks'
-import { us_data } from './us' // this is the info we need to draw the map, download from website (bookmarked)
+import { geoJson } from './geoJson' // this is the info we need to draw the map, download from website (bookmarked)
 import { city_data } from './us-cities'
 
 export class MapChart extends React.Component {
@@ -29,7 +29,7 @@ export class MapChart extends React.Component {
 
     const projection = d3
       .geoAlbersUsa()
-      .scale([this.svgWidth]) // why is the chart width the scale?
+      .scale([this.svgWidth])
       .translate([this.svgWidth / 2, this.svgHeight / 2])
 
     const path = d3.geoPath(projection)
@@ -39,21 +39,22 @@ export class MapChart extends React.Component {
       .attr('width', this.svgWidth)
       .attr('height', this.svgHeight)
 
-    us_data.features.forEach((us_e, us_i) => {
+    // combine the geoJson with the zombie data
+    geoJson.features.forEach((us_e, us_i) => {
       // the features refers to each state
       zombie_data.forEach((z_e, z_i) => {
         if (us_e.properties.name !== z_e.state) {
           return null
         }
-        // this says add the zombie figure to the us_data
-        us_data.features[us_i].properties.num = parseFloat(z_e.num)
+        // this says add the zombie figure to the geoJson data
+        geoJson.features[us_i].properties.num = parseFloat(z_e.num)
       })
     })
-    const leftOffset = 0
+
     const topOffset = 20
     svg
       .selectAll('path')
-      .data(us_data.features)
+      .data(geoJson.features)
       .enter()
       .append('path')
       .attr('d', path)
@@ -63,7 +64,7 @@ export class MapChart extends React.Component {
       })
       .attr('stroke', 'red')
       .attr('stroke-width', 1)
-      .attr('transform', d => `translate(${-leftOffset}, ${topOffset})`)
+      .attr('transform', d => `translate(0, ${topOffset})`)
 
     const cityGroups = svg
       .selectAll('.cityGroups')
@@ -71,21 +72,20 @@ export class MapChart extends React.Component {
       .enter()
       .append('g')
       .attr('class', 'cityGroups')
-      .attr(
-        'transform',
-        d =>
-          `translate(${projection([d.lon, d.lat])[0] -
-            leftOffset}, ${projection([d.lon, d.lat])[1] + topOffset})`
-      )
+      .attr('transform', d => {
+        const coordinates = projection([d.lon, d.lat])
+        return `translate(${coordinates[0]}, ${coordinates[1] + topOffset})`
+      })
 
     cityGroups
       .append('circle')
-      .attr('r', 20)
       .attr('r', d => Math.sqrt(parseInt(d.population) * 0.00005))
       .style('fill', 'pink')
       .style('opacity', 0.8)
       .attr('cx', '0')
       .attr('cy', '0')
+      .append('title')
+      .text(d => d.city)
 
     cityGroups
       .append('text')

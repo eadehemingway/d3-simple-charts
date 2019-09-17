@@ -1,4 +1,4 @@
-export const us_data = {
+export const geoJson = {
   "type": "FeatureCollection",
   "features": [
     {
