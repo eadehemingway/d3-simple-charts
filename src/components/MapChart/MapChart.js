@@ -7,7 +7,12 @@ import { city_data } from './us-cities'
 export class MapChart extends React.Component {
   svgWidth = 800
   svgHeight = 500
+  projection = null
 
+  state = {
+    mapTranslationX: 0,
+    mapTranslationY: 0
+  }
   componentDidMount() {
     const colorScale = d3
       .scaleQuantize() // scales the numbers because the colours can be considered catagorical... allows each colour to represent lots of values
@@ -39,6 +44,8 @@ export class MapChart extends React.Component {
       .attr('width', this.svgWidth)
       .attr('height', this.svgHeight)
 
+    const mapGroup = svg.append('g').attr('class', 'map-group')
+
     // combine the geoJson with the zombie data
     geoJson.features.forEach((us_e, us_i) => {
       // the features refers to each state
@@ -52,7 +59,7 @@ export class MapChart extends React.Component {
     })
 
     const topOffset = 20
-    svg
+    mapGroup
       .selectAll('path')
       .data(geoJson.features)
       .enter()
@@ -66,7 +73,7 @@ export class MapChart extends React.Component {
       .attr('stroke-width', 1)
       .attr('transform', d => `translate(0, ${topOffset})`)
 
-    const cityGroups = svg
+    const cityGroups = mapGroup
       .selectAll('.cityGroups')
       .data(city_data)
       .enter()
@@ -96,11 +103,47 @@ export class MapChart extends React.Component {
       .attr('stroke-width', '0.5')
   }
 
+  move = (xy, distance) => {
+    const xTranslate = xy === 'x' ? distance : 0
+    const yTranslate = xy === 'y' ? distance : 0
+    const { mapTranslationX, mapTranslationY } = this.state
+    const newX = mapTranslationX + xTranslate
+    const newY = mapTranslationY + yTranslate
+    this.setState({ mapTranslationX: newX, mapTranslationY: newY })
+
+    const svg = d3.select('svg')
+
+    svg
+      .select('.map-group')
+      .transition()
+      .duration(750)
+      .attr('transform', d => `translate(${newX}, ${newY})`)
+  }
   render() {
     return (
       <section className="page-excl-nav">
         <h1 className="graph-title"> Map</h1>
         <svg />
+        <div className="button-container">
+          <button className="btn" onClick={() => this.move('y', -50)}>
+            U
+          </button>
+          <button className="btn" onClick={() => this.move('y', 50)}>
+            D
+          </button>
+          <button className="btn" onClick={() => this.move('x', -50)}>
+            L
+          </button>
+          <button className="btn" onClick={() => this.move('x', 50)}>
+            R
+          </button>
+          {/* <button className="btn" onClick={() => this.move('x', -50)}>
+            L
+          </button>
+          <button className="btn" onClick={() => this.move('x', 50)}>
+            R
+          </button> */}
+        </div>
       </section>
     )
   }

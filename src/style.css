@@ -74,6 +74,12 @@ body {
   border: 1px solid lightsteelblue;
   text-align: center;
   margin: 10px;
+  cursor: pointer;
+}
+.btn:hover {
+  border: 1px solid steelblue;
+  background: lightsteelblue;
+  color: white;
 }
 
 .button-container {
