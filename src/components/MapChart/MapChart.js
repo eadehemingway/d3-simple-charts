@@ -10,8 +10,9 @@ export class MapChart extends React.Component {
   projection = null
 
   state = {
-    mapTranslationX: 0,
-    mapTranslationY: 0
+    mapTranslationX: this.svgWidth / 2,
+    mapTranslationY: this.svgHeight / 2,
+    zoomValue: 1
   }
   componentDidMount() {
     const colorScale = d3
@@ -32,10 +33,7 @@ export class MapChart extends React.Component {
         'rgb(103,0,13)'
       ])
 
-    const projection = d3
-      .geoAlbersUsa()
-      .scale([this.svgWidth])
-      .translate([this.svgWidth / 2, this.svgHeight / 2])
+    const projection = this.projection()
 
     const path = d3.geoPath(projection)
 
@@ -43,8 +41,6 @@ export class MapChart extends React.Component {
       .select('svg')
       .attr('width', this.svgWidth)
       .attr('height', this.svgHeight)
-
-    const mapGroup = svg.append('g').attr('class', 'map-group')
 
     // combine the geoJson with the zombie data
     geoJson.features.forEach((us_e, us_i) => {
@@ -59,7 +55,7 @@ export class MapChart extends React.Component {
     })
 
     const topOffset = 20
-    mapGroup
+    svg
       .selectAll('path')
       .data(geoJson.features)
       .enter()
@@ -73,7 +69,7 @@ export class MapChart extends React.Component {
       .attr('stroke-width', 1)
       .attr('transform', d => `translate(0, ${topOffset})`)
 
-    const cityGroups = mapGroup
+    const cityGroups = svg
       .selectAll('.cityGroups')
       .data(city_data)
       .enter()
@@ -102,47 +98,66 @@ export class MapChart extends React.Component {
       .attr('stroke', 'white')
       .attr('stroke-width', '0.5')
   }
+  projection = () =>
+    d3
+      .geoAlbersUsa()
+      .scale([this.svgWidth])
+      .translate([this.svgWidth / 2, this.svgHeight / 2])
 
-  move = (xy, distance) => {
-    const xTranslate = xy === 'x' ? distance : 0
-    const yTranslate = xy === 'y' ? distance : 0
-    const { mapTranslationX, mapTranslationY } = this.state
-    const newX = mapTranslationX + xTranslate
-    const newY = mapTranslationY + yTranslate
-    this.setState({ mapTranslationX: newX, mapTranslationY: newY })
+  move = (x, y, zoomIncrement) => {
+    const { mapTranslationX, mapTranslationY, zoomValue } = this.state
+    const newX = mapTranslationX + x
+    const newY = mapTranslationY + y
+    const newZoomValue = Math.max(zoomValue + zoomIncrement, 1)
+    this.setState({
+      mapTranslationX: newX,
+      mapTranslationY: newY,
+      zoomValue: newZoomValue
+    })
 
+    const projection = this.projection()
+    projection.translate([newX, newY]).scale([this.svgWidth * newZoomValue])
+    const topOffset = 20
     const svg = d3.select('svg')
-
     svg
-      .select('.map-group')
+      .selectAll('path')
       .transition()
       .duration(750)
-      .attr('transform', d => `translate(${newX}, ${newY})`)
+      .attr('d', d3.geoPath(projection))
+    svg
+      .selectAll('.cityGroups')
+      .transition()
+      .duration(750)
+      .attr('transform', d => {
+        const coordinates = projection([d.lon, d.lat])
+        return `translate(${coordinates[0]}, ${coordinates[1] + topOffset})`
+      })
   }
+
   render() {
     return (
       <section className="page-excl-nav">
         <h1 className="graph-title"> Map</h1>
         <svg />
         <div className="button-container">
-          <button className="btn" onClick={() => this.move('y', -50)}>
+          <button className="btn" onClick={() => this.move(0, 100, 0)}>
             U
           </button>
-          <button className="btn" onClick={() => this.move('y', 50)}>
+          <button className="btn" onClick={() => this.move(0, -100, 0)}>
             D
           </button>
-          <button className="btn" onClick={() => this.move('x', -50)}>
+          <button className="btn" onClick={() => this.move(100, 0, 0)}>
             L
           </button>
-          <button className="btn" onClick={() => this.move('x', 50)}>
+          <button className="btn" onClick={() => this.move(-100, 0, 0)}>
             R
           </button>
-          {/* <button className="btn" onClick={() => this.move('x', -50)}>
-            L
+          <button className="btn" onClick={() => this.move(null, null, 1)}>
+            +
           </button>
-          <button className="btn" onClick={() => this.move('x', 50)}>
-            R
-          </button> */}
+          <button className="btn" onClick={() => this.move(null, null, -1)}>
+            -
+          </button>
         </div>
       </section>
     )
