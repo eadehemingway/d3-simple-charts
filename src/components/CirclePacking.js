@@ -385,14 +385,14 @@ export class CirclePacking extends React.Component {
 
   componentDidMount() {
     const { data } = this.state
-    const svgWidth = 500
-    const svgHeight = 500
+    const svgWidth = 700
+    const svgHeight = 700
     const svg = d3
       .select('svg')
       .attr('width', svgWidth)
       .attr('height', svgHeight)
 
-    const margin = 0
+    const margin = 200
 
     const g = svg
       .append('g')
@@ -414,12 +414,8 @@ export class CirclePacking extends React.Component {
 
     const root = d3
       .hierarchy(data)
-      .sum(function(d) {
-        return d.size
-      })
-      .sort(function(a, b) {
-        return b.value - a.value
-      })
+      .sum(d => d.size)
+      .sort((a, b) => b.value - a.value)
 
     let focus = root
     const nodes = pack(root).descendants()
@@ -430,17 +426,8 @@ export class CirclePacking extends React.Component {
       .data(nodes)
       .enter()
       .append('circle')
-      .attr('class', function(d) {
-        return d.parent
-          ? d.children
-            ? 'node'
-            : 'node node--leaf'
-          : 'node node--root'
-      })
-      .style('fill', function(d) {
-        return d.children ? color(d.depth) : 'white'
-      })
-      .on('click', function(d) {
+      .style('fill', d => (d.children ? color(d.depth) : 'white'))
+      .on('click', d => {
         if (focus !== d) zoom(d), d3.event.stopPropagation()
       })
 
@@ -449,22 +436,13 @@ export class CirclePacking extends React.Component {
       .enter()
       .append('text')
       .attr('class', 'label')
-      .style('fill-opacity', function(d) {
-        return d.parent === root ? 1 : 0
-      })
-      .style('display', function(d) {
-        return d.parent === root ? 'inline' : 'none'
-      })
-      .text(function(d) {
-        return d.data.name
-      })
-      .attr('fill', 'white')
+      .style('display', d => (d.parent === root ? 'inline' : 'none'))
+      .text(d => d.data.name)
+      .attr('fill', 'pink')
 
     const node = g.selectAll('circle,text')
 
-    svg.style('background', color(-1)).on('click', function() {
-      zoom(root)
-    })
+    svg.on('click', d => zoom(root))
 
     zoomTo([root.x, root.y, root.r * 2 + margin])
 
@@ -474,13 +452,13 @@ export class CirclePacking extends React.Component {
       const transition = d3
         .transition()
         .duration(d3.event.altKey ? 7500 : 750)
-        .tween('zoom', function(d) {
-          var i = d3.interpolateZoom(view, [
+        .tween('zoom', d => {
+          const i = d3.interpolateZoom(view, [
             focus.x,
             focus.y,
             focus.r * 2 + margin
           ])
-          return function(t) {
+          return t => {
             zoomTo(i(t))
           }
         })
@@ -490,9 +468,7 @@ export class CirclePacking extends React.Component {
         .filter(function(d) {
           return d.parent === focus || this.style.display === 'inline'
         })
-        .style('fill-opacity', function(d) {
-          return d.parent === focus ? 1 : 0
-        })
+        .style('fill-opacity', d => (d.parent === focus ? 1 : 0))
         .on('start', function(d) {
           if (d.parent === focus) this.style.display = 'inline'
         })
@@ -504,12 +480,11 @@ export class CirclePacking extends React.Component {
     function zoomTo(v) {
       const k = svgWidth / v[2]
       view = v
-      node.attr('transform', function(d) {
-        return 'translate(' + (d.x - v[0]) * k + ',' + (d.y - v[1]) * k + ')'
-      })
-      circle.attr('r', function(d) {
-        return d.r * k
-      })
+      node.attr(
+        'transform',
+        d => 'translate(' + (d.x - v[0]) * k + ',' + (d.y - v[1]) * k + ')'
+      )
+      circle.attr('r', d => d.r * k)
     }
   }
 
