@@ -160,7 +160,7 @@ export class CirclePacking extends React.Component {
     let focus = data
     const root = pack(data)
     const nodes = pack(data).descendants()
-    let view
+
     const g = svg.append('g')
     //   .attr('transform', 'translate(' + diameter / 2 + ',' + diameter / 2 + ')')
 
@@ -191,13 +191,20 @@ export class CirclePacking extends React.Component {
       .enter()
       .append('text')
       .attr('class', 'label')
+      // .style('fill-opacity', function(d) {
+      //   return d.parent === root ? 1 : 0
+      // })
+      .style('display', function(d) {
+        if (!d.parent) return 'none'
+        return d.parent.data.name === root.data.name ? 'inline' : 'none'
+      })
       .text(function(d) {
         return d.data.name
       })
       .attr('x', d => d.x)
       .attr('y', d => d.y)
 
-    // var node = g.selectAll('circle,text')
+    // const node = g.selectAll('circle,text')
 
     // svg.style('background', 'linen').on('click', function() {
     //   zoom(root)
