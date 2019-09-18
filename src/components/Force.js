@@ -6,18 +6,30 @@ export class Force extends React.Component {
   svgHeight = 500
   state = {
     data: [
-      { id: 2, campus: 'khaleel', gender: 'female', role: 'student' },
-      { id: 3, campus: 'khaleel', gender: 'male', role: 'student' },
-      { id: 4, campus: 'khaleel', gender: 'male', role: 'student' },
-      { id: 6, campus: 'khaleel', gender: 'female', role: 'mentor' },
-      { id: 7, campus: 'khaleel', gender: 'female', role: 'mentor' },
-      { id: 8, campus: 'khaleel', gender: 'female', role: 'student' },
-      { id: 10, campus: 'gaza', gender: 'female', role: 'student' },
-      { id: 11, campus: 'gaza', gender: 'male', role: 'student' },
-      { id: 12, campus: 'gaza', gender: 'male', role: 'student' },
-      { id: 14, campus: 'gaza', gender: 'female', role: 'mentor' },
-      { id: 15, campus: 'gaza', gender: 'female', role: 'mentor' },
-      { id: 16, campus: 'gaza', gender: 'female', role: 'student' }
+      {
+        id: 2,
+        value: 2,
+        campus: 'khaleel',
+        gender: 'female',
+        role: 'student'
+      },
+      { id: 3, value: 3, campus: 'khaleel', gender: 'male', role: 'student' },
+      { id: 4, value: 4, campus: 'khaleel', gender: 'male', role: 'student' },
+      { id: 6, value: 6, campus: 'khaleel', gender: 'female', role: 'mentor' },
+      { id: 7, value: 7, campus: 'khaleel', gender: 'female', role: 'mentor' },
+      {
+        id: 8,
+        value: 8,
+        campus: 'khaleel',
+        gender: 'female',
+        role: 'student'
+      },
+      { id: 10, value: 10, campus: 'gaza', gender: 'female', role: 'student' },
+      { id: 11, value: 11, campus: 'gaza', gender: 'male', role: 'student' },
+      { id: 12, value: 12, campus: 'gaza', gender: 'male', role: 'student' },
+      { id: 14, value: 14, campus: 'gaza', gender: 'female', role: 'mentor' },
+      { id: 15, value: 15, campus: 'gaza', gender: 'female', role: 'mentor' },
+      { id: 16, value: 16, campus: 'gaza', gender: 'female', role: 'student' }
     ],
     categories: {
       role: ['student', 'mentor'],
@@ -39,7 +51,7 @@ export class Force extends React.Component {
       .data(data)
       .enter()
       .append('circle')
-      .attr('r', 12)
+      .attr('r', d => d.value * 2)
       .attr('class', 'bubble')
       .attr('fill', d => (d.gender === 'male' ? 'coral' : '#c4c3d0'))
 
@@ -81,11 +93,9 @@ export class Force extends React.Component {
       .forceY()
       .y(d => this.centerOfGravityForDatum(d).y)
       .strength(1)
-    const radius = 13
-    const collision = d3.forceCollide().radius(radius)
 
     d3.forceSimulation(data)
-      .force('collision', collision)
+      .force('collision', d3.forceCollide().radius(d => d.value * 2))
       .force('x', forceX)
       .force('y', forceY)
       .alpha(0.1) // small alpha to have the elements move at a slower pace

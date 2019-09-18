@@ -15,6 +15,10 @@ import { MapChart } from './MapChart/MapChart'
 import { Matrix } from './Matrix'
 import { Sankey } from './Sankey'
 import { MouseGame } from './MouseGame'
+import { Chord } from './Chord'
+import { Voronoi } from './Voronoi'
+import { RadarChart } from './RadarChart'
+import { CirclePacking } from './CirclePacking'
 
 export class App extends React.Component {
   state = {}
@@ -37,6 +41,10 @@ export class App extends React.Component {
             <Route exact path="/matrix" component={Matrix} />
             <Route exact path="/sankey" component={Sankey} />
             <Route exact path="/mousegame" component={MouseGame} />
+            <Route exact path="/chord" component={Chord} />
+            <Route exact path="/voronoi" component={Voronoi} />
+            <Route exact path="/radar-chart" component={RadarChart} />
+            <Route exact path="/circle-packing" component={CirclePacking} />
           </Switch>
         </div>
       </BrowserRouter>
