@@ -403,7 +403,7 @@ export class CirclePacking extends React.Component {
 
     const pack = d3
       .pack()
-      .size([svgWidth - margin, svgWidth - margin])
+      .size([svgWidth - margin, svgHeight - margin])
       .padding(2)
 
     const color = d3
