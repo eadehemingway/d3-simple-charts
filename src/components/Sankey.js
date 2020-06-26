@@ -10,18 +10,28 @@ export class Sankey extends React.Component {
         { id: 1, name: 'id1' },
         { id: 2, name: 'id2' },
         { id: 3, name: 'id3' },
-        { id: 4, name: 'id4' }
+        { id: 4, name: 'id4' },
+        { id: 5, name: 'id5' },
+        { id: 6, name: 'id6' },
+        { id: 7, name: 'id7' },
+        { id: 8, name: 'id8' },
+        { id: 9, name: 'id9' },
       ],
       links: [
-        { source: 0, target: 2, value: 2 },
-        { source: 1, target: 2, value: 2 },
-        { source: 1, target: 3, value: 2 },
-        { source: 0, target: 4, value: 2 },
-        { source: 2, target: 3, value: 2 },
-        { source: 2, target: 4, value: 2 },
-        { source: 3, target: 4, value: 4 }
-      ]
-    }
+        { source: 0, target: 2, value: 1 },
+        { source: 1, target: 2, value: 1 },
+        { source: 1, target: 3, value: 1 },
+        { source: 0, target: 4, value: 1 },
+        { source: 1, target: 3, value: 1 },
+        { source: 2, target: 4, value: 1 },
+        { source: 3, target: 4, value: 1 },
+        { source: 7, target: 9, value: 1 },
+        { source: 8, target: 3, value: 1 },
+        { source: 5, target: 6, value: 1 },
+        { source: 1, target: 6, value: 1 },
+        { source: 1, target: 9, value: 1 },
+      ],
+    },
   }
 
   componentDidMount() {
@@ -30,7 +40,7 @@ export class Sankey extends React.Component {
     const svgHeight = 800
     const san = sankey()
       .size([svgWidth, 300])
-      .nodeId(d => d.id)
+      .nodeId((d) => d.id)
       .nodeWidth(20)
       .nodePadding(20)
 
@@ -51,9 +61,9 @@ export class Sankey extends React.Component {
       .attr('d', sankeyLinkHorizontal())
       .attr('fill', 'none')
       .attr('stroke', 'coral')
-      .attr('stroke-width', d => d.width)
+      .attr('stroke-width', 15)
       .attr('opacity', 0.3)
-      .attr('transform', d => 'translate(0,100)')
+      .attr('transform', (d) => 'translate(0,100)')
 
     svg
       .append('g')
@@ -63,14 +73,14 @@ export class Sankey extends React.Component {
       .enter()
       .append('rect')
       .classed('node', true)
-      .attr('x', d => d.x0)
-      .attr('y', d => d.y0)
-      .attr('width', d => d.x1 - d.x0)
-      .attr('height', d => d.y1 - d.y0)
+      .attr('x', (d) => d.x0)
+      .attr('y', (d) => d.y0)
+      .attr('width', (d) => d.x1 - d.x0)
+      .attr('height', (d) => d.y1 - d.y0)
       .attr('fill', 'white')
       .attr('stroke', 'coral')
       .attr('opacity', 0.8)
-      .attr('transform', d => 'translate(0,100)')
+      .attr('transform', (d) => 'translate(0,100)')
       .call(d3.drag().on('drag', dragmove))
 
     function dragmove(d) {

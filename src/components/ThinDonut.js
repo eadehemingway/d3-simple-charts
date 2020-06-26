@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 
 export class ThinDonut extends React.Component {
   state = {
-    data: []
+    data: [],
   }
 
   componentDidMount() {
@@ -13,7 +13,7 @@ export class ThinDonut extends React.Component {
       1500
     )
 
-    const svgWidth = 700
+    const svgWidth = 900
     const svgHeight = 500
     const svg = d3
       .select('svg')
@@ -38,14 +38,11 @@ export class ThinDonut extends React.Component {
   drawDonut = () => {
     const { data } = this.state
 
-    const arc = d3
-      .arc()
-      .outerRadius(200)
-      .innerRadius(180)
+    const arc = d3.arc().outerRadius(200).innerRadius(180)
 
     const pie = d3
       .pie()
-      .value(d => d)
+      .value((d) => d)
       .sort(null)
 
     const donutContainer = d3.select('.donutContainer')
@@ -56,23 +53,23 @@ export class ThinDonut extends React.Component {
       .data(pie(data))
       .enter()
       .append('path')
-      .attr('fill', 'lightsteelblue')
-      .attr('stroke', 'snow')
-      .attr('stroke-width', '3px')
+      .attr('fill', 'snow')
+      .attr('stroke', 'coral')
+      .attr('stroke-width', '1px')
 
     const updateSelection = enterSelection.merge(arcSelection)
 
     updateSelection
       .transition()
       .duration(1500)
-      .attrTween('d', function(d) {
+      .attrTween('d', function (d) {
         const prevData = this._prevData || 0
         const i = d3.interpolate(prevData, d)
         this._prevData = d
-        return t => arc(i(t))
+        return (t) => arc(i(t))
       })
   }
-  makeData = size => {
+  makeData = (size) => {
     return d3.range(size).map(() => Math.random() * 100)
   }
   componentWillUnmount() {

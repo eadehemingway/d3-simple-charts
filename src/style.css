@@ -1,12 +1,3 @@
-.side-nav {
-  height: 100vh;
-  width: 200px;
-  min-width: 200px;
-  border-right: 2px solid #e5ccc9;
-
-  padding-left: 2rem;
-}
-
 .nav-link {
   font-family: futura, sans-serif;
   width: 100%;

@@ -1,53 +1,33 @@
 import React from 'react'
 import * as d3 from 'd3'
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { chartList } from './ChartList'
+import styled from 'styled-components'
 
 export class Nav extends React.Component {
   state = {}
 
   render() {
     return (
-      <div className="side-nav">
+      <Container>
         <Link className="nav-link" to="/">
           HOME
         </Link>
-        <Link className="nav-link" to="/donut">
-          DONUT
-        </Link>
-        <Link className="nav-link" to="/thindonut">
-          THIN DONUT
-        </Link>
-        <Link className="nav-link" to="/force">
-          FORCE
-        </Link>
-        <Link className="nav-link" to="/forcewithlinks">
-          FORCE WITH LINKS
-        </Link>
-        <Link className="nav-link" to="/barchart">
-          BARCHART
-        </Link>
-        <Link className="nav-link" to="/linechart">
-          LINECHART
-        </Link>
-        <Link className="nav-link" to="/map">
-          MAP
-        </Link>
-        <Link className="nav-link" to="/tree">
-          TREE
-        </Link>
-        <Link className="nav-link" to="/matrix">
-          MATRIX
-        </Link>
-        <Link className="nav-link" to="/sankey">
-          SANKEY
-        </Link>
-        <Link className="nav-link" to="/mousegame">
-          MOUSE GAME
-        </Link>
-        <Link className="nav-link" to="/circle-packing">
-          CIRCLE PACKING
-        </Link>
-      </div>
+        {chartList.map((c) => (
+          <Link className="nav-link" to={c.endpoint}>
+            {c.name}
+          </Link>
+        ))}
+      </Container>
     )
   }
 }
+
+const Container = styled.div`
+  padding-bottom: 70px;
+  height: 100vh;
+  width: 200px;
+  min-width: 200px;
+  border-right: 2px solid #e5ccc9;
+  padding-left: 2rem;
+`

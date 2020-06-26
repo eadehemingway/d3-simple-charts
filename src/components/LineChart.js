@@ -15,8 +15,8 @@ export class LineChart extends React.Component {
           { rating: 2.5, date_entered: '2018-03-30' },
           { rating: 3, date_entered: '2018-04-02' },
           { rating: 3.5, date_entered: '2018-04-15' },
-          { rating: 4, date_entered: '2018-04-30' }
-        ]
+          { rating: 4, date_entered: '2018-04-30' },
+        ],
       },
       {
         label: 'lineTwo',
@@ -27,8 +27,8 @@ export class LineChart extends React.Component {
           { rating: 4, date_entered: '2018-03-30' },
           { rating: 3, date_entered: '2018-04-02' },
           { rating: 2, date_entered: '2018-04-15' },
-          { rating: 2, date_entered: '2018-04-30' }
-        ]
+          { rating: 2, date_entered: '2018-04-30' },
+        ],
       },
       {
         label: 'lineThree',
@@ -39,22 +39,22 @@ export class LineChart extends React.Component {
           { rating: 4, date_entered: '2018-03-30' },
           { rating: 5, date_entered: '2018-04-02' },
           { rating: 6, date_entered: '2018-04-15' },
-          { rating: 6, date_entered: '2018-04-30' }
-        ]
-      }
-    ]
+          { rating: 6, date_entered: '2018-04-30' },
+        ],
+      },
+    ],
   }
 
   componentDidMount() {
     const { data } = this.state
-    const timeParsedData = data.map(d => {
-      const lineData = d.lineData.map(l => ({
+    const timeParsedData = data.map((d) => {
+      const lineData = d.lineData.map((l) => ({
         ...l,
-        date_entered: d3.timeParse('%Y-%m-%d')(l.date_entered)
+        date_entered: d3.timeParse('%Y-%m-%d')(l.date_entered),
       }))
       return {
         ...d,
-        lineData
+        lineData,
       }
     })
 
@@ -64,7 +64,7 @@ export class LineChart extends React.Component {
       .scaleTime()
       .domain([
         d3.timeParse('%Y-%m-%d')('2018-02-12'),
-        d3.timeParse('%Y-%m-%d')('2018-04-30')
+        d3.timeParse('%Y-%m-%d')('2018-04-30'),
       ])
       .range([leftPadding, this.svgWidth - leftPadding])
 
@@ -78,7 +78,10 @@ export class LineChart extends React.Component {
       .attr('width', this.svgWidth)
       .attr('height', this.svgHeight)
 
-    const x_axis = d3.axisBottom(x_scale).tickFormat(d3.timeFormat('%y-%m-%d'))
+    const x_axis = d3
+      .axisBottom(x_scale)
+      .tickFormat(d3.timeFormat('%y-%m-%d'))
+      .tickSize(0)
 
     svg
       .append('g')
@@ -95,7 +98,7 @@ export class LineChart extends React.Component {
       .attr('font-size', '0.8rem')
       .attr('transform', 'rotate(-65)')
 
-    const y_axis = d3.axisLeft(y_scale).ticks(11)
+    const y_axis = d3.axisLeft(y_scale).ticks(11).tickSize(0)
     svg
       .append('g')
       .attr('class', 'axis')
@@ -103,14 +106,23 @@ export class LineChart extends React.Component {
       .call(y_axis)
       .selectAll('text')
 
-    const colorsFactPalette = d3.scaleOrdinal(d3.schemeSet3)
+    function getColor(i) {
+      switch (i) {
+        case 0:
+          return 'coral'
+        case 1:
+          return 'pink'
+        case 2:
+          return 'blue'
+      }
+    }
 
     const totalLength = this.svgWidth * 3
 
     const lineFunc = d3
       .line()
-      .x(d => x_scale(d.date_entered))
-      .y(d => y_scale(d.rating))
+      .x((d) => x_scale(d.date_entered))
+      .y((d) => y_scale(d.rating))
 
     svg
       .selectAll('.lines')
@@ -119,10 +131,11 @@ export class LineChart extends React.Component {
       .append('g')
       .append('path')
       .attr('fill', 'none')
-      .style('stroke', (d, i) => colorsFactPalette(i))
-      .style('stroke-width', '3px')
-      .attr('d', d => lineFunc(d.lineData)) // the lineFunc needs to be passed an array of points
-      .attr('class', d => d.label)
+      .style('stroke', (d, i) => getColor(i))
+      .attr('opacity', 0.3)
+      .style('stroke-width', '9px')
+      .attr('d', (d) => lineFunc(d.lineData)) // the lineFunc needs to be passed an array of points
+      .attr('class', (d) => d.label)
       .attr('stroke-dasharray', totalLength + ' ' + totalLength)
       .attr('stroke-dashoffset', totalLength)
       .transition()
@@ -142,10 +155,10 @@ export class LineChart extends React.Component {
       )
       .attr('class', '.legend')
       .style('opacity', 1)
-      .on('mouseover', function(d) {
+      .on('mouseover', function (d) {
         d3.select(this).style('cursor', 'pointer')
       })
-      .on('click', function(d) {
+      .on('click', function (d) {
         const legendKey = this
         const line = d3.select(`.${d.label}`)
         if (legendKey.style.opacity == 1) {
@@ -160,15 +173,16 @@ export class LineChart extends React.Component {
     legendItem
       .append('text')
       .text('test label')
-      .attr('transform', 'translate(20,10)')
+      .attr('transform', 'translate(20,12)')
       .style('font-family', 'futura')
       .attr('fill', 'steelblue')
 
     legendItem
       .append('rect')
-      .attr('width', 10)
-      .attr('height', 10)
-      .attr('fill', (d, i) => colorsFactPalette(i))
+      .attr('width', 15)
+      .attr('height', 15)
+      .attr('fill', (d, i) => getColor(i))
+      .attr('opacity', 0.3)
   }
 
   render() {

@@ -10,14 +10,14 @@ export class Donut extends React.Component {
       { name: 'North Am: 7.79%', value: 579024000 },
       { name: 'South Am: 5.68%', value: 422535000 },
       { name: 'Oceania: 0.54%', value: 38304000 },
-      { name: 'Antarctica: 0%', value: 0 }
-    ]
+      { name: 'Antarctica: 0%', value: 0 },
+    ],
   }
 
   componentDidMount() {
     const { data } = this.state
 
-    const svgWidth = 500
+    const svgWidth = 900
     const svgHeight = 500
 
     const svg = d3
@@ -25,13 +25,13 @@ export class Donut extends React.Component {
       .attr('class', 'pie')
       .attr('width', svgWidth)
       .attr('height', svgHeight)
-    const outerRadius = 150
+    const outerRadius = 200
     const innerRadius = 80
     const donutGroup = svg
       .append('g')
       .attr(
         'transform',
-        'translate(' + outerRadius * 2 + ',' + svgHeight / 2 + ')'
+        'translate(' + svgWidth / 2 + ',' + svgHeight / 2 + ')'
       )
 
     donutGroup
@@ -41,16 +41,13 @@ export class Donut extends React.Component {
       .attr('font-family', 'futura')
       .attr('fill', 'lightslategray')
 
-    const arc = d3
-      .arc()
-      .innerRadius(innerRadius)
-      .outerRadius(outerRadius)
+    const arc = d3.arc().innerRadius(innerRadius).outerRadius(outerRadius)
 
     const pie = d3
       .pie()
       .padAngle(0.05)
       .sort(null) // need this so that it loads in order
-      .value(d => d.value)
+      .value((d) => d.value)
     const dataInPieFormat = pie(data)
 
     donutGroup
@@ -60,24 +57,20 @@ export class Donut extends React.Component {
       .append('path')
       .attr('fill', 'lightsteelblue')
       .attr('opacity', 0.8)
-      .on('mouseover', function(d) {
+      .on('mouseover', function (d) {
         d3.select('text').text(`${d.data.name}`)
-        d3.select(this)
-          .style('cursor', 'pointer')
-          .style('opacity', '0.5')
+        d3.select(this).style('cursor', 'pointer').style('opacity', '0.5')
       })
-      .on('mouseout', function(d) {
+      .on('mouseout', function (d) {
         d3.select('text').text(`continent pop`)
-        d3.select(this)
-          .style('cursor', 'none')
-          .style('opacity', '1')
+        d3.select(this).style('cursor', 'none').style('opacity', '1')
       })
       .transition()
       .duration(1500)
-      .attrTween('d', function(d) {
+      .attrTween('d', function (d) {
         const interpolateStart = d3.interpolate(0, d.startAngle)
         const interpolateEnd = d3.interpolate(0, d.endAngle)
-        return function(t) {
+        return function (t) {
           d.startAngle = interpolateStart(t)
           d.endAngle = interpolateEnd(t)
           return arc(d)

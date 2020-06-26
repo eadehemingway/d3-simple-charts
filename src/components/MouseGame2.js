@@ -1,7 +1,7 @@
 import React from 'react'
 import * as d3 from 'd3'
 
-export class MouseGame extends React.Component {
+export class MouseGame2 extends React.Component {
   state = {
     data: [],
   }
@@ -17,13 +17,6 @@ export class MouseGame extends React.Component {
       .attr('font-family', 'futura')
       .attr('font-size', 70)
       .attr('opacity', 0.1)
-
-    setInterval(() => {
-      const { data } = this.state
-      if (data.length === 0) return
-      const lastDotRemoved = [...data].slice(4)
-      this.setState({ data: lastDotRemoved })
-    }, 50)
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.data !== this.state.data) {
@@ -51,9 +44,9 @@ export class MouseGame extends React.Component {
       .append('circle')
       .attr('cx', (d) => d.x)
       .attr('cy', (d) => d.y)
-      .attr('r', 3)
+      .attr('r', 9)
       .attr('fill', 'coral')
-      .attr('opacity', 1)
+      .attr('opacity', 0.3)
 
     circles.exit().transition().duration(100).attr('opacity', 0).remove()
   }
