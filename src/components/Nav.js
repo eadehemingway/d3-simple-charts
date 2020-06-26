@@ -44,15 +44,6 @@ export class Nav extends React.Component {
         <Link className="nav-link" to="/mousegame">
           MOUSE GAME
         </Link>
-        <Link className="nav-link" to="/chord">
-          CHORD
-        </Link>
-        <Link className="nav-link" to="/voronoi">
-          VORONOI
-        </Link>
-        <Link className="nav-link" to="/radar-chart">
-          RADAR CHART
-        </Link>
         <Link className="nav-link" to="/circle-packing">
           CIRCLE PACKING
         </Link>
